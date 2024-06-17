@@ -1,44 +1,43 @@
-import { createBrowserRouter } from "react-router-dom";
-import FeedEdit from "../pages/FeedEdit";
-import FeedRead from "../pages/FeedRead";
-import FeedWrite from "../pages/FeedWrite";
-import Join from "../pages/Join";
-import Login from "../pages/Login";
-import Mypage from "../pages/Mypage";
-import Newsfeed from "../pages/Newsfeed";
-import Description from "../pages/Description";
+import { createBrowserRouter } from 'react-router-dom';
+import Editpage from '../pages/Editpage';
+import Readpage from '../pages/Readpage';
+import Writepage from '../pages/Writepage';
+import Joinpage from '../pages/Joinpage';
+import Loginpage from '../pages/Loginpage';
+import Mypage from '../pages/Mypage';
+import Mainpage from '../pages/Mainpage';
 const router = createBrowserRouter([
-	{
-		path: "/",
-		element: <Newsfeed />
-	},
-	{
-		path: "/feed-read/:feedId",
-		element: <FeedRead />
-	},
-	{
-		path: "/feed-write",
-		element: <FeedWrite />
-	},
-	{
-		path: "/feed-edit/:feedId",
-		element: <FeedEdit />
-	},
-	{
-		path: "/join",
-		element: <Join />
-	},
-	{
-		path: "/Description",
-		element: <Description />
-	},
-	{
-		path: "/login",
-		element: <Login />
-	},
-	{
-		path: "/my-page/:userId",
-		element: <Mypage />
-	}
+  {
+    path: '/',
+    element: <Mainpage />
+  },
+  {
+    path: '/Readpage/:feedId',
+    element: <Readpage />
+  },
+  {
+    path: '/Writepage',
+    element: <Writepage />
+  },
+  {
+    path: '/Editpage/:feedId',
+    element: <Editpage />
+  },
+  {
+    path: '/Joinpage',
+    element: <Joinpage />
+  },
+  {
+    path: '/Description',
+    element: <Description />
+  },
+  {
+    path: '/Loginpage',
+    element: <Loginpage />
+  },
+  {
+    path: '/my-page/:userId',
+    element: <Mypage />
+  }
 ]);
 export default router;
