@@ -1,11 +1,13 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { useNavigate } from 'react-router-dom';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
 import usePost from '../../hooks/usePost';
 
 const { kakao } = window;
 
 function WritePage() {
+  const nav = useNavigate();
   // 맵
   const [map, setMap] = useState(null);
   // 마커
@@ -119,6 +121,8 @@ function WritePage() {
 
     const response = await createPost(newPostData);
     console.log('REPONSE___', response);
+
+    nav('/', { replace: true });
   };
 
   return (

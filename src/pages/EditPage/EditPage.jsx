@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import Modal from '../../components/Modal';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
 import { useModal } from '../../hooks/useModal';
@@ -9,6 +9,7 @@ import usePost from '../../hooks/usePost';
 const { kakao } = window;
 
 function EditPage() {
+  const nav = useNavigate();
   const loaderData = useLoaderData();
   const modal = useModal();
   const { data: postData } = loaderData;
@@ -126,6 +127,8 @@ function EditPage() {
     console.log('NEW POST DATA___', newPostData);
     const response = await updatePost(newPostData);
     console.log('REPONSE___', response);
+
+    nav('/', { replace: true });
   };
 
   // Post 삭제
@@ -134,6 +137,8 @@ function EditPage() {
 
     const response = await deletePost(postData[0].post_id);
     console.log('RESPONSE___', response);
+
+    nav('/', { replace: true });
   };
 
   // Modal 열기
