@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import EditPage from '../pages/EditPage/EditPage';
+import editPageLoader from '../pages/EditPage/EditPage.loader';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import MyPage from '../pages/MyPage';
@@ -21,8 +22,9 @@ const router = createBrowserRouter([
     element: <WritePage />
   },
   {
-    path: '/edit/:feedId',
-    element: <EditPage />
+    path: '/edit/:postId',
+    element: <EditPage />,
+    loader: editPageLoader
   },
   {
     path: '/sign-up',

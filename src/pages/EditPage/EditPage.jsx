@@ -1,12 +1,16 @@
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useId, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { useLoaderData } from 'react-router-dom';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
 import supabase from '../../supabase/supabase';
 
 const { kakao } = window;
 
 function EditPage() {
+  const loaderData = useLoaderData();
+  const { data: postData } = loaderData;
+  console.log(postData[0]);
   // 맵
   const [map, setMap] = useState(null);
   // 마커
@@ -14,7 +18,7 @@ function EditPage() {
   // 위도,경도 저장용
   const [saveCoords, setSaveCoords] = useState({ lat: null, lon: null });
   // 별점 드래그 용
-  const [starWidth, setStarWidth] = useState(0);
+  const [starWidth, setStarWidth] = useState(postData[0].star);
   // input 관리용
   const inputRef = useRef([]);
   // input ID 관리용
@@ -33,13 +37,16 @@ function EditPage() {
     const container = document.getElementById('map');
 
     const options = {
-      center: new kakao.maps.LatLng(37.5023270151927, 127.044444694599),
+      center: new kakao.maps.LatLng(postData[0].lon, postData[0].lat),
       level: 3
     };
 
     setMap(new kakao.maps.Map(container, options));
-    setMarker(new kakao.maps.Marker());
-  }, []);
+    setMarker(new kakao.maps.Marker({ position: new kakao.maps.LatLng(postData[0].lon, postData[0].lat) }));
+  }, [postData]);
+
+  // 처음 마커 찍기
+  marker?.setMap(map);
 
   // 검색 성공 시
   const completeHandler = (data) => {
@@ -183,6 +190,7 @@ function EditPage() {
                 className="p-2 pb-px w-full text-base appearance-none outline-none h-[50px]
                      text-[#0a0426] line-clamp-1
                      peer select-none"
+                defaultValue={postData[0].title}
                 type="text"
                 placeholder=""
               />
@@ -200,6 +208,7 @@ function EditPage() {
             </div>
             <textarea
               ref={(el) => (inputRef.current[2] = el)}
+              defaultValue={postData[0].contents}
               className=" w-full aspect-video resize-none outline-none p-2"
               placeholder="내용을 입력해주세요"
             />
