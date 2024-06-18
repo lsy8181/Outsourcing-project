@@ -10,7 +10,7 @@ const { kakao } = window;
 function EditPage() {
   const loaderData = useLoaderData();
   const { data: postData } = loaderData;
-  console.log(postData[0]);
+  console.log(postData);
   // 맵
   const [map, setMap] = useState(null);
   // 마커
@@ -25,8 +25,8 @@ function EditPage() {
   const addressId = useId();
   const titleId = useId();
 
-  const { mutateAsync: createPost } = useMutation({
-    mutationFn: (postData) => supabase.from('posts').insert(postData)
+  const { mutateAsync: updatePost } = useMutation({
+    mutationFn: (newPostData) => supabase.from('posts').update(newPostData).eq('post_id', newPostData.post_id).select()
   });
 
   const geocoder = new kakao.maps.services.Geocoder();
@@ -70,16 +70,10 @@ function EditPage() {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
         setSaveCoords({ lat: result[0].y, lon: result[0].x });
-        // console.log(coords);
 
         marker.setMap(null);
         marker.setPosition(coords);
         marker.setMap(map);
-
-        // const infowindow = new kakao.maps.InfoWindow({
-        //   content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
-        // });
-        // infowindow.open(map, marker);
 
         map.setCenter(coords);
       }
@@ -112,28 +106,31 @@ function EditPage() {
     });
   }, [map, marker]);
 
-  const test = async () => {
+  const test = async (e) => {
+    e.preventDefault();
     // const res = await supabase.auth.signUp({
     //   email: 'test@naver.com',
     //   password: '123123'
     // });
     // console.log(res);
 
-    console.log('WRITE TEST___');
-    // console.log('POSTID___', uuidv4());
-    console.log('CREATED_AT___', new Date());
-    console.log('ADDRESS___', inputRef.current[0].value);
-    console.log('LAT___', saveCoords.lat);
-    console.log('LON___', saveCoords.lon);
-    console.log('UPDATED_AT___', null);
-    console.log('TITLE___', inputRef.current[1].value);
-    console.log('CONTENTS___', inputRef.current[2].value);
-    console.log('STAR___', starWidth * 10);
-    console.log('USERID___', 'user id');
+    console.log('EDIT TEST___');
+    // console.log('POSTID___', postData[0].post_id);
+    // console.log('UPDATE_AT___', new Date());
+    // console.log('ADDRESS___', inputRef.current[0].value);
+    // console.log('LAT___', saveCoords.lat);
+    // console.log('LON___', saveCoords.lon);
+    // console.log('UPDATED_AT___', null);
+    // console.log('TITLE___', inputRef.current[1].value);
+    // console.log('CONTENTS___', inputRef.current[2].value);
+    // console.log('STAR___', starWidth * 10);
+    // console.log('USERID___', 'a7bcdd01-c602-4b1f-bbd7-6e1d03ebb38b');
 
     const newPostData = {
-      // post_id: 1,
-      created_at: new Date(),
+      post_id: postData[0].post_id,
+      // created_at: new Date(),
+      address: inputRef.current[0].value,
+      update_at: new Date(),
       lat: saveCoords.lat,
       lon: saveCoords.lon,
       title: inputRef.current[1].value,
@@ -141,8 +138,8 @@ function EditPage() {
       star: starWidth,
       user_id: 'a7bcdd01-c602-4b1f-bbd7-6e1d03ebb38b'
     };
-
-    const response = await createPost(newPostData);
+    console.log('NEW POST DATA___', newPostData);
+    const response = await updatePost(newPostData);
     console.log('REPONSE___', response);
   };
 
@@ -160,6 +157,7 @@ function EditPage() {
                      text-[#0a0426] line-clamp-1
                      hover:shadow-md peer select-none"
               type="text"
+              defaultValue={postData[0].address}
               placeholder=""
               readOnly
             />
@@ -233,7 +231,7 @@ function EditPage() {
               <span className="text-lg font-bold">{starWidth / 2}</span>
             </span>
 
-            <button onClick={test} className="rounded-lg border border-gray-300 py-2 px-6 bg-gray-50">
+            <button onClick={(e) => test(e)} className="rounded-lg border border-gray-300 py-2 px-6 bg-gray-50">
               글 쓰기
             </button>
           </div>

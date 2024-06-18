@@ -140,6 +140,7 @@ user_id uuid	uuid
     const newPostData = {
       // post_id: 1,
       created_at: new Date(),
+      address: inputRef.current[0].value,
       lat: saveCoords.lat,
       lon: saveCoords.lon,
       title: inputRef.current[1].value,
