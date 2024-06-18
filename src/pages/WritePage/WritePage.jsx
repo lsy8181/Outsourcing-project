@@ -207,9 +207,11 @@ function WritePage() {
 
             <button
               onClick={onClickCreatePostHandler}
-              className="rounded-lg border border-gray-300 py-2 px-6 bg-gray-50"
+              className="rounded-lg border border-gray-300 py-2 px-6 text-white font-bold  text-sm bg-[#2196F3]
+                hover:bg-[#1976D2] hover:shadow-md
+                active:bg-[#0D47A1]"
             >
-              글 쓰기
+              작성
             </button>
           </div>
         </div>
