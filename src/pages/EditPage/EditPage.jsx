@@ -1,13 +1,16 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useLoaderData } from 'react-router-dom';
+import Modal from '../../components/Modal';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
+import { useModal } from '../../hooks/useModal';
 import usePost from '../../hooks/usePost';
 
 const { kakao } = window;
 
 function EditPage() {
   const loaderData = useLoaderData();
+  const modal = useModal();
   const { data: postData } = loaderData;
   // console.log(postData);
   // 맵
@@ -122,12 +125,15 @@ function EditPage() {
     const response = await updatePost(newPostData);
     console.log('REPONSE___', response);
   };
-
-  const onClickDeletePostHandler = async () => {
+  const test = async () => {
     console.log('DELETE TEST___');
 
     const response = await deletePost(postData[0].post_id);
     console.log('RESPONSE___', response);
+  };
+
+  const onOpenModalHandler = () => {
+    modal.openModal(<Modal onYesHandler={test} />);
   };
 
   return (
@@ -231,7 +237,7 @@ function EditPage() {
               </button>
 
               <button
-                onClick={onClickDeletePostHandler}
+                onClick={onOpenModalHandler}
                 className="rounded-lg border border-gray-300 py-2 px-6 text-white font-bold  text-sm bg-[#F44336]
                 hover:bg-[#D32F2F] hover:shadow-md
                 active:bg-[#B71C1C]"
