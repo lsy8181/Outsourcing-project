@@ -1,7 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useId, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import { v4 as uuidv4 } from 'uuid';
 import useDidMountEffect from '../hooks/useDidMountEffect';
 import supabase from '../supabase/supabase';
 
@@ -120,8 +119,14 @@ star bigint	int8
 user_id uuid	uuid
  *
  */
+    // const res = await supabase.auth.signUp({
+    //   email: 'test@naver.com',
+    //   password: '123123'
+    // });
+    // console.log(res);
+
     console.log('WRITE TEST___');
-    console.log('POSTID___', uuidv4());
+    // console.log('POSTID___', uuidv4());
     console.log('CREATED_AT___', new Date());
     console.log('ADDRESS___', inputRef.current[0].value);
     console.log('LAT___', saveCoords.lat);
@@ -133,14 +138,14 @@ user_id uuid	uuid
     console.log('USERID___', 'user id');
 
     const newPostData = {
-      post_id: uuidv4(),
+      // post_id: 1,
       created_at: new Date(),
       lat: saveCoords.lat,
       lon: saveCoords.lon,
       title: inputRef.current[1].value,
       contents: inputRef.current[2].value,
       star: starWidth,
-      user_id: uuidv4()
+      user_id: 'a7bcdd01-c602-4b1f-bbd7-6e1d03ebb38b'
     };
 
     const response = await createPost(newPostData);
