@@ -32,18 +32,18 @@ const router = createBrowserRouter([
         loader: editPageLoader
       },
       {
-        path: '/signUp',
-        element: <SignUpPage />
-      },
-      {
-        path: '/logIn',
-        element: <LoginPage />
-      },
-      {
         path: '/my-page/:userId',
         element: <MyPage />
       }
     ]
+  },
+  {
+    path: '/signUp',
+    element: <SignUpPage />
+  },
+  {
+    path: '/logIn',
+    element: <LoginPage />
   }
 ]);
 
