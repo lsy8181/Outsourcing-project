@@ -12,7 +12,7 @@ function EditPage() {
   const loaderData = useLoaderData();
   const modal = useModal();
   const { data: postData } = loaderData;
-  // console.log(postData);
+  console.log(postData);
   // 맵
   const [map, setMap] = useState(null);
   // 마커
@@ -37,12 +37,12 @@ function EditPage() {
     const container = document.getElementById('map');
 
     const options = {
-      center: new kakao.maps.LatLng(postData[0].lon, postData[0].lat),
+      center: new kakao.maps.LatLng(postData[0].lat, postData[0].lon),
       level: 3
     };
 
     setMap(new kakao.maps.Map(container, options));
-    setMarker(new kakao.maps.Marker({ position: new kakao.maps.LatLng(postData[0].lon, postData[0].lat) }));
+    setMarker(new kakao.maps.Marker({ position: new kakao.maps.LatLng(postData[0].lat, postData[0].lon) }));
   }, [postData]);
 
   // 처음 마커 찍기
