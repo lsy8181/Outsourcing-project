@@ -9,6 +9,8 @@ function WritePage() {
   const [marker, setMarker] = useState(null);
   const inputRef = useRef([]);
 
+  const [starWidth, setStarWidth] = useState(0);
+
   const addressId = useId();
   const titleId = useId();
 
@@ -113,7 +115,7 @@ user_id uuid	uuid
     console.log('UPDATED_AT___');
     console.log('TITLE___', inputRef.current[1].value);
     console.log('CONTENTS___', inputRef.current[2].value);
-    console.log('STAR___');
+    console.log('STAR___', starWidth * 10);
     console.log('USERID___');
   };
 
@@ -184,10 +186,24 @@ user_id uuid	uuid
           </div>
 
           <div className="border border-green-400 flex w-full justify-between items-center">
-            <div className=" text-6xl relative">
-              ☆☆☆☆☆
-              <div className="absolute top-0">★★★★★</div>
-            </div>
+            <span className="text-3xl h-[40px] flex gap-2 items-baseline">
+              <div className="relative">
+                ☆☆☆☆☆
+                <span style={{ width: `${starWidth}0%` }} className="absolute top-0 left-0 overflow-hidden">
+                  ★★★★★
+                </span>
+                <input
+                  onChange={(e) => setStarWidth(e.target.value)}
+                  type="range"
+                  className="absolute size-full top-0 left-0 opacity-0"
+                  step={1}
+                  min={0}
+                  max={10}
+                />
+              </div>
+              <span className="text-lg font-bold">{starWidth / 2}</span>
+            </span>
+
             <button onClick={test} className="rounded-lg border border-gray-300 py-2 px-6 bg-gray-50">
               글 쓰기
             </button>
