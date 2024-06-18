@@ -1,16 +1,22 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { v4 as uuidv4 } from 'uuid';
 import useDidMountEffect from '../hooks/useDidMountEffect';
 
 const { kakao } = window;
 
 function WritePage() {
+  // 맵
   const [map, setMap] = useState(null);
+  // 마커
   const [marker, setMarker] = useState(null);
-  const inputRef = useRef([]);
-
+  // 위도,경도 저장용
+  const [saveCoords, setSaveCoords] = useState({ lat: null, lon: null });
+  // 별점 드래그 용
   const [starWidth, setStarWidth] = useState(0);
-
+  // input 관리용
+  const inputRef = useRef([]);
+  // input ID 관리용
   const addressId = useId();
   const titleId = useId();
 
@@ -51,6 +57,7 @@ function WritePage() {
     geocoder.addressSearch(fullAddress, function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        setSaveCoords({ lat: result[0].y, lon: result[0].x });
         // console.log(coords);
 
         marker.setMap(null);
@@ -67,6 +74,7 @@ function WritePage() {
     });
   };
 
+  // 주소 찾기 클릭 시
   const onClickHandler = () => {
     open({ onComplete: completeHandler });
   };
@@ -75,7 +83,7 @@ function WritePage() {
   useDidMountEffect(() => {
     kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
       const coords = mouseEvent.latLng;
-      // console.log(coords);
+      setSaveCoords({ lat: coords.La, lon: coords.Ma });
 
       // 위도,경도로 주소 찾기
       geocoder.coord2Address(coords.getLng(), coords.getLat(), (result, status) => {
@@ -106,17 +114,17 @@ star bigint	int8
 user_id uuid	uuid
  *
  */
-    console.log('TEST___');
-    console.log('POSTID___');
+    console.log('WRITE TEST___');
+    console.log('POSTID___', uuidv4());
     console.log('CREATED_AT___', new Date());
     console.log('ADDRESS___', inputRef.current[0].value);
-    console.log('LAT___');
-    console.log('LON___');
-    console.log('UPDATED_AT___');
+    console.log('LAT___', saveCoords.lat);
+    console.log('LON___', saveCoords.lon);
+    console.log('UPDATED_AT___', null);
     console.log('TITLE___', inputRef.current[1].value);
     console.log('CONTENTS___', inputRef.current[2].value);
     console.log('STAR___', starWidth * 10);
-    console.log('USERID___');
+    console.log('USERID___', 'user id');
   };
 
   return (
