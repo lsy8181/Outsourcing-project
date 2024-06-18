@@ -6,6 +6,7 @@ import MyPage from '../pages/MyPage';
 import ReadPage from '../pages/ReadPage';
 import SignUpPage from '../pages/SignUpPage';
 import WritePage from '../pages/WritePage';
+import Layout from '../components/common/Layout';
 
 const router = createBrowserRouter([
   {
