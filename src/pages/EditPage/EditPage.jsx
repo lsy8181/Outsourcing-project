@@ -2,8 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useEffect, useId, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useLoaderData } from 'react-router-dom';
+import api from '../../api/api';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
-import supabase from '../../supabase/supabase';
 
 const { kakao } = window;
 
@@ -26,7 +26,7 @@ function EditPage() {
   const titleId = useId();
 
   const { mutateAsync: updatePost } = useMutation({
-    mutationFn: (newPostData) => supabase.from('posts').update(newPostData).eq('post_id', newPostData.post_id).select()
+    mutationFn: (newPostData) => api.post.updatePost(newPostData)
   });
 
   const geocoder = new kakao.maps.services.Geocoder();
@@ -197,7 +197,7 @@ function EditPage() {
             />
           </div>
 
-          <div className="border border-green-400 flex w-full justify-between items-center">
+          <div className="border border-green-400 flex w-full justify-between items-center select-none">
             <span className="text-3xl h-[40px] flex gap-2 items-baseline">
               <div className="relative">
                 ☆☆☆☆☆
