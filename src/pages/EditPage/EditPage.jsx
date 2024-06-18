@@ -132,7 +132,7 @@ function EditPage() {
 
   return (
     <main>
-      <div className="max-w-[1440px] bg-red-200 mx-auto flex flex-col items-center p-2 justify-center gap-6">
+      <div className="max-w-[1440px]  mx-auto flex flex-col items-center p-2 justify-center gap-6">
         <h1>EditPage</h1>
 
         <div className="max-w-[500px] w-full flex border border-gray-200 divide-x-2 divide-solid">
@@ -201,15 +201,18 @@ function EditPage() {
 
           <div className="border border-green-400 flex w-full justify-between items-center select-none">
             <span className="text-3xl h-[40px] flex gap-2 items-baseline">
-              <div className="relative">
+              <div className="relative cursor-pointer">
                 ☆☆☆☆☆
-                <span style={{ width: `${starWidth}0%` }} className="absolute top-0 left-0 overflow-hidden">
+                <span
+                  style={{ width: `${starWidth}0%` }}
+                  className=" text-[#FFD700] absolute top-0 left-0 overflow-hidden"
+                >
                   ★★★★★
                 </span>
                 <input
                   onChange={(e) => setStarWidth(e.target.value)}
                   type="range"
-                  className="absolute size-full top-0 left-0 opacity-0"
+                  className="cursor-pointer absolute size-full top-0 left-0 opacity-0"
                   step={1}
                   min={0}
                   max={10}

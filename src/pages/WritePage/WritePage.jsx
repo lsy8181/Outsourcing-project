@@ -188,15 +188,18 @@ function WritePage() {
 
           <div className="border border-green-400 flex w-full justify-between items-center  select-none">
             <span className="text-3xl h-[40px] flex gap-2 items-baseline">
-              <div className="relative">
+              <div className="relative cursor-pointer">
                 ☆☆☆☆☆
-                <span style={{ width: `${starWidth}0%` }} className="absolute top-0 left-0 overflow-hidden">
+                <span
+                  style={{ width: `${starWidth}0%` }}
+                  className=" text-[#FFD700] absolute top-0 left-0 overflow-hidden"
+                >
                   ★★★★★
                 </span>
                 <input
                   onChange={(e) => setStarWidth(e.target.value)}
                   type="range"
-                  className="absolute size-full top-0 left-0 opacity-0"
+                  className="cursor-pointer absolute size-full top-0 left-0 opacity-0"
                   step={1}
                   min={0}
                   max={10}
