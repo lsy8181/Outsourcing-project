@@ -1,11 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
-import EditPage from '../pages/EditPage';
+import EditPage from '../pages/EditPage/EditPage';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import MyPage from '../pages/MyPage';
 import ReadPage from '../pages/ReadPage';
 import SignUpPage from '../pages/SignUpPage';
-import WritePage from '../pages/WritePage';
+import WritePage from '../pages/WritePage/WritePage';
 
 const router = createBrowserRouter([
   {

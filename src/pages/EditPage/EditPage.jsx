@@ -1,12 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
 import { useEffect, useId, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import useDidMountEffect from '../hooks/useDidMountEffect';
-import supabase from '../supabase/supabase';
+import useDidMountEffect from '../../hooks/useDidMountEffect';
+import supabase from '../../supabase/supabase';
 
 const { kakao } = window;
 
-function WritePage() {
+function EditPage() {
   // 맵
   const [map, setMap] = useState(null);
   // 마커
@@ -106,19 +106,6 @@ function WritePage() {
   }, [map, marker]);
 
   const test = async () => {
-    /**
- *
-post_id bigint int8
-created_at timestamp with time zone	timestamptz
-lat double precision	float8
-lon double precision	float8
-update_at timestamp with time zone	timestamptz
-title text	text
-contents text	text
-star bigint	int8
-user_id uuid	uuid
- *
- */
     // const res = await supabase.auth.signUp({
     //   email: 'test@naver.com',
     //   password: '123123'
@@ -155,7 +142,7 @@ user_id uuid	uuid
   return (
     <main>
       <div className="max-w-[1440px] bg-red-200 mx-auto flex flex-col items-center p-2 justify-center gap-6">
-        <h1>WritePage</h1>
+        <h1>EditPage</h1>
 
         <div className="max-w-[500px] w-full flex border border-gray-200 divide-x-2 divide-solid">
           <div className="relative w-full flex-1">
@@ -247,4 +234,4 @@ user_id uuid	uuid
   );
 }
 
-export default WritePage;
+export default EditPage;
