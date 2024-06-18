@@ -10,7 +10,7 @@ const { kakao } = window;
 function EditPage() {
   const loaderData = useLoaderData();
   const { data: postData } = loaderData;
-  console.log(postData);
+  // console.log(postData);
   // 맵
   const [map, setMap] = useState(null);
   // 마커
