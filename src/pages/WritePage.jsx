@@ -25,6 +25,7 @@ function WritePage() {
     setMarker(new kakao.maps.Marker());
   }, []);
 
+  // 검색 성공 시
   const completeHandler = (data) => {
     let fullAddress = data.address;
     let extraAddress = '';
@@ -41,6 +42,7 @@ function WritePage() {
 
     inputRef.current.value = fullAddress;
 
+    // 주소로 마커찍기
     geocoder.addressSearch(fullAddress, function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -64,11 +66,13 @@ function WritePage() {
     open({ onComplete: completeHandler });
   };
 
+  // 첫 렌더링 제외
   useDidMountEffect(() => {
     kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
       const coords = mouseEvent.latLng;
       // console.log(coords);
 
+      // 위도,경도로 주소 찾기
       geocoder.coord2Address(coords.getLng(), coords.getLat(), (result, status) => {
         if (status === kakao.maps.services.Status.OK) {
           inputRef.current.value = result[0].road_address
@@ -85,7 +89,7 @@ function WritePage() {
 
   return (
     <main>
-      <div className="max-w-[1440px] bg-red-200 mx-auto flex flex-col items-center justify-center p-4 gap-6">
+      <div className="max-w-[1440px] bg-red-200 mx-auto flex flex-col items-center justify-center gap-6">
         <h1>WritePage</h1>
         <div className="max-w-[500px] w-full flex border border-gray-200 divide-x-2 divide-solid">
           <div className="relative w-full flex-1">
@@ -116,6 +120,7 @@ function WritePage() {
           </button>
         </div>
         <div className="border border-blue-600 max-w-[800px] w-full aspect-video mx-auto" id="map" />
+        <div className="max-w-[500px]">dddd</div>
       </div>
     </main>
   );
