@@ -37,12 +37,12 @@ function EditPage() {
     const container = document.getElementById('map');
 
     const options = {
-      center: new kakao.maps.LatLng(postData[0].lat, postData[0].lon),
+      center: new kakao.maps.LatLng(postData[0].lon, postData[0].lat),
       level: 3
     };
 
     setMap(new kakao.maps.Map(container, options));
-    setMarker(new kakao.maps.Marker({ position: new kakao.maps.LatLng(postData[0].lat, postData[0].lon) }));
+    setMarker(new kakao.maps.Marker({ position: new kakao.maps.LatLng(postData[0].lon, postData[0].lat) }));
   }, [postData]);
 
   // 처음 마커 찍기
@@ -69,7 +69,8 @@ function EditPage() {
     geocoder.addressSearch(fullAddress, function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-        setSaveCoords({ lat: result[0].y, lon: result[0].x });
+        console.log(coords);
+        setSaveCoords({ lat: result[0].x, lon: result[0].y });
 
         marker.setMap(null);
         marker.setPosition(coords);
