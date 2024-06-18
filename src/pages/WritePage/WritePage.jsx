@@ -102,38 +102,8 @@ function WritePage() {
     });
   }, [map, marker]);
 
-  const test = async () => {
-    /**
- *
-post_id bigint int8
-created_at timestamp with time zone	timestamptz
-lat double precision	float8
-lon double precision	float8
-update_at timestamp with time zone	timestamptz
-title text	text
-contents text	text
-star bigint	int8
-user_id uuid	uuid
- *
- */
-    // const res = await supabase.auth.signUp({
-    //   email: 'test@naver.com',
-    //   password: '123123'
-    // });
-    // console.log(res);
-
+  const onClickCreatePostHandler = async () => {
     console.log('WRITE TEST___');
-    // console.log('POSTID___', uuidv4());
-    // console.log('CREATED_AT___', new Date());
-    // console.log('ADDRESS___', inputRef.current[0].value);
-    // console.log('LAT___', saveCoords.lat);
-    // console.log('LON___', saveCoords.lon);
-    // console.log('UPDATED_AT___', null);
-    // console.log('TITLE___', inputRef.current[1].value);
-    // console.log('CONTENTS___', inputRef.current[2].value);
-    // console.log('STAR___', starWidth * 10);
-    // console.log('USERID___', 'user id');
-
     const newPostData = {
       // post_id: 1,
       created_at: new Date(),
@@ -235,7 +205,10 @@ user_id uuid	uuid
               <span className="text-lg font-bold">{starWidth / 2}</span>
             </span>
 
-            <button onClick={test} className="rounded-lg border border-gray-300 py-2 px-6 bg-gray-50">
+            <button
+              onClick={onClickCreatePostHandler}
+              className="rounded-lg border border-gray-300 py-2 px-6 bg-gray-50"
+            >
               글 쓰기
             </button>
           </div>

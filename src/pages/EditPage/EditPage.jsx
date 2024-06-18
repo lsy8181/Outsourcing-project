@@ -103,10 +103,8 @@ function EditPage() {
     });
   }, [map, marker]);
 
-  const test = async (e) => {
-    e.preventDefault();
-
-    console.log('EDIT TEST___');
+  const onClickUpdatePostHandler = async () => {
+    console.log('UPDATE TEST___');
 
     const newPostData = {
       post_id: postData[0].post_id,
@@ -124,6 +122,8 @@ function EditPage() {
     const response = await updatePost(newPostData);
     console.log('REPONSE___', response);
   };
+
+  const onClickDeletePostHandler = async () => {};
 
   return (
     <main>
@@ -212,10 +212,25 @@ function EditPage() {
               </div>
               <span className="text-lg font-bold">{starWidth / 2}</span>
             </span>
+            <div className="flex gap-2">
+              <button
+                onClick={onClickUpdatePostHandler}
+                className="rounded-lg border border-gray-300 py-2 px-6 text-white font-bold  text-sm bg-[#2196F3]
+                hover:bg-[#1976D2] hover:shadow-md
+                active:bg-[#0D47A1]"
+              >
+                수정
+              </button>
 
-            <button onClick={(e) => test(e)} className="rounded-lg border border-gray-300 py-2 px-6 bg-gray-50">
-              글 쓰기
-            </button>
+              <button
+                onClick={onClickDeletePostHandler}
+                className="rounded-lg border border-gray-300 py-2 px-6 text-white font-bold  text-sm bg-[#F44336]
+                hover:bg-[#D32F2F] hover:shadow-md
+                active:bg-[#B71C1C]"
+              >
+                삭제
+              </button>
+            </div>
           </div>
         </div>
       </div>
