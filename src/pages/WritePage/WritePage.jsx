@@ -1,8 +1,7 @@
-import { useMutation } from '@tanstack/react-query';
 import { useEffect, useId, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
-import api from '../../api/api';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
+import usePost from '../../hooks/usePost';
 
 const { kakao } = window;
 
@@ -21,9 +20,7 @@ function WritePage() {
   const addressId = useId();
   const titleId = useId();
 
-  const { mutateAsync: createPost } = useMutation({
-    mutationFn: (postData) => api.post.createPost(postData)
-  });
+  const { createPost } = usePost();
 
   const geocoder = new kakao.maps.services.Geocoder();
   const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
@@ -127,15 +124,15 @@ user_id uuid	uuid
 
     console.log('WRITE TEST___');
     // console.log('POSTID___', uuidv4());
-    console.log('CREATED_AT___', new Date());
-    console.log('ADDRESS___', inputRef.current[0].value);
-    console.log('LAT___', saveCoords.lat);
-    console.log('LON___', saveCoords.lon);
-    console.log('UPDATED_AT___', null);
-    console.log('TITLE___', inputRef.current[1].value);
-    console.log('CONTENTS___', inputRef.current[2].value);
-    console.log('STAR___', starWidth * 10);
-    console.log('USERID___', 'user id');
+    // console.log('CREATED_AT___', new Date());
+    // console.log('ADDRESS___', inputRef.current[0].value);
+    // console.log('LAT___', saveCoords.lat);
+    // console.log('LON___', saveCoords.lon);
+    // console.log('UPDATED_AT___', null);
+    // console.log('TITLE___', inputRef.current[1].value);
+    // console.log('CONTENTS___', inputRef.current[2].value);
+    // console.log('STAR___', starWidth * 10);
+    // console.log('USERID___', 'user id');
 
     const newPostData = {
       // post_id: 1,

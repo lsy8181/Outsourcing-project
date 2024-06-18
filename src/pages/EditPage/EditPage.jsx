@@ -1,9 +1,8 @@
-import { useMutation } from '@tanstack/react-query';
 import { useEffect, useId, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useLoaderData } from 'react-router-dom';
-import api from '../../api/api';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
+import usePost from '../../hooks/usePost';
 
 const { kakao } = window;
 
@@ -25,9 +24,7 @@ function EditPage() {
   const addressId = useId();
   const titleId = useId();
 
-  const { mutateAsync: updatePost } = useMutation({
-    mutationFn: (newPostData) => api.post.updatePost(newPostData)
-  });
+  const { updatePost } = usePost();
 
   const geocoder = new kakao.maps.services.Geocoder();
   const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
