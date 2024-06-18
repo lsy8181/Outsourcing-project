@@ -24,7 +24,7 @@ function EditPage() {
   const addressId = useId();
   const titleId = useId();
 
-  const { updatePost } = usePost();
+  const { updatePost, deletePost } = usePost();
 
   const geocoder = new kakao.maps.services.Geocoder();
   const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
@@ -123,7 +123,12 @@ function EditPage() {
     console.log('REPONSE___', response);
   };
 
-  const onClickDeletePostHandler = async () => {};
+  const onClickDeletePostHandler = async () => {
+    console.log('DELETE TEST___');
+
+    const response = await deletePost(postData[0].post_id);
+    console.log('RESPONSE___', response);
+  };
 
   return (
     <main>

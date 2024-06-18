@@ -10,8 +10,13 @@ export default function usePost() {
     mutationFn: (newPostData) => api.post.updatePost(newPostData)
   });
 
+  const { mutateAsync: deletePost } = useMutation({
+    mutationFn: (deletePostId) => api.post.deletePost(deletePostId)
+  });
+
   return {
     createPost,
-    updatePost
+    updatePost,
+    deletePost
   };
 }
