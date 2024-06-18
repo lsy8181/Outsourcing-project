@@ -125,7 +125,7 @@ function EditPage() {
     const response = await updatePost(newPostData);
     console.log('REPONSE___', response);
   };
-  const test = async () => {
+  const onDeletePostHandler = async () => {
     console.log('DELETE TEST___');
 
     const response = await deletePost(postData[0].post_id);
@@ -133,7 +133,7 @@ function EditPage() {
   };
 
   const onOpenModalHandler = () => {
-    modal.openModal(<Modal onYesHandler={test} />);
+    modal.openModal(<Modal onYesHandler={onDeletePostHandler} />);
   };
 
   return (
