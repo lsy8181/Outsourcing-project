@@ -24,6 +24,8 @@ function WritePage() {
 
   const { createPost } = usePost();
 
+  console.log(kakao);
+
   const geocoder = new kakao.maps.services.Geocoder();
   const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
 
