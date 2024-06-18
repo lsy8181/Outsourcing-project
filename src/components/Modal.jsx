@@ -1,6 +1,6 @@
 import { useModal } from '../hooks/useModal';
 
-function Modal({ onYesHandler }) {
+function Modal({ title, onYesHandler }) {
   const modal = useModal();
   return (
     <div
@@ -9,7 +9,7 @@ function Modal({ onYesHandler }) {
   bg-black/50 flex items-center justify-center z-[99]"
     >
       <div className="bg-white w-80 h-40 rounded-lg flex items-center justify-center flex-col divide-y-2 divide-solid">
-        <div className="flex justify-center items-center w-[400px] h-full">정말로 삭제하시겠습니까?</div>
+        <div className="flex justify-center items-center w-[400px] h-full">{title}</div>
         <div
           className="flex justify-center items-center size-full 
           divide-x-2 divide-solid"

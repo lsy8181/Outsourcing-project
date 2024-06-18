@@ -18,7 +18,7 @@ function EditPage() {
   // 마커
   const [marker, setMarker] = useState(null);
   // 위도,경도 저장용
-  const [saveCoords, setSaveCoords] = useState({ lat: null, lon: null });
+  const [saveCoords, setSaveCoords] = useState({ lat: postData[0].lat, lon: postData[0].lon });
   // 별점 드래그 용
   const [starWidth, setStarWidth] = useState(postData[0].star);
   // input 관리용
@@ -106,6 +106,7 @@ function EditPage() {
     });
   }, [map, marker]);
 
+  // Post 수정
   const onClickUpdatePostHandler = async () => {
     console.log('UPDATE TEST___');
 
@@ -125,6 +126,8 @@ function EditPage() {
     const response = await updatePost(newPostData);
     console.log('REPONSE___', response);
   };
+
+  // Post 삭제
   const onDeletePostHandler = async () => {
     console.log('DELETE TEST___');
 
@@ -132,8 +135,11 @@ function EditPage() {
     console.log('RESPONSE___', response);
   };
 
-  const onOpenModalHandler = () => {
-    modal.openModal(<Modal onYesHandler={onDeletePostHandler} />);
+  // Modal 열기
+  const onOpenModalHandler = (type) => {
+    const title = type === 'DEL' ? '정말로 삭제하시겠습니까?' : '정말로 수정하시겠습니까?';
+    const yesFn = type === 'DEL' ? onDeletePostHandler : onClickUpdatePostHandler;
+    modal.openModal(<Modal title={title} onYesHandler={yesFn} />);
   };
 
   return (
@@ -228,7 +234,7 @@ function EditPage() {
             </span>
             <div className="flex gap-2">
               <button
-                onClick={onClickUpdatePostHandler}
+                onClick={() => onOpenModalHandler('UPD')}
                 className="rounded-lg border border-gray-300 py-2 px-6 text-white font-bold  text-sm bg-[#2196F3]
                 hover:bg-[#1976D2] hover:shadow-md
                 active:bg-[#0D47A1]"
@@ -237,7 +243,7 @@ function EditPage() {
               </button>
 
               <button
-                onClick={onOpenModalHandler}
+                onClick={() => onOpenModalHandler('DEL')}
                 className="rounded-lg border border-gray-300 py-2 px-6 text-white font-bold  text-sm bg-[#F44336]
                 hover:bg-[#D32F2F] hover:shadow-md
                 active:bg-[#B71C1C]"

@@ -12,6 +12,7 @@ class PostAPI {
   }
 
   async updatePost(newPostData) {
+    console.log(newPostData);
     const response = await this.#supabase.from('posts').update(newPostData).eq('post_id', newPostData.post_id);
     console.log('API UPDATE POST___', response);
     return response;
