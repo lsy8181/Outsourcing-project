@@ -57,7 +57,8 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <main className="flex flex-col justify-center items-center h-full">
+      {/* <main className="flex flex-col justify-center items-center h-full"> */}
+      <main>
         <Outlet />
       </main>
       <Footer />
