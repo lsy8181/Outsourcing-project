@@ -19,7 +19,8 @@ function WritePage() {
     <main>
       <div className="max-w-[1440px] bg-red-200 mx-auto flex flex-col items-center justify-center p-4">
         <h1>WritePage</h1>
-        <div className="max-w-[1000px] w-full aspect-video mx-auto" id="map"></div>
+        <div className="max-w-[1000px] w-full aspect-video mx-auto" id="map" />
+        <div></div>
       </div>
     </main>
   );
