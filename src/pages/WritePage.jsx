@@ -1,7 +1,9 @@
+import { useMutation } from '@tanstack/react-query';
 import { useEffect, useId, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { v4 as uuidv4 } from 'uuid';
 import useDidMountEffect from '../hooks/useDidMountEffect';
+import supabase from '../supabase/supabase';
 
 const { kakao } = window;
 
@@ -19,6 +21,10 @@ function WritePage() {
   // input ID 관리용
   const addressId = useId();
   const titleId = useId();
+
+  const { mutateAsync: createPost } = useMutation({
+    mutationFn: (postData) => supabase.from('posts').insert(postData)
+  });
 
   const geocoder = new kakao.maps.services.Geocoder();
   const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
@@ -100,7 +106,7 @@ function WritePage() {
     });
   }, [map, marker]);
 
-  const test = () => {
+  const test = async () => {
     /**
  *
 post_id bigint int8
@@ -125,6 +131,20 @@ user_id uuid	uuid
     console.log('CONTENTS___', inputRef.current[2].value);
     console.log('STAR___', starWidth * 10);
     console.log('USERID___', 'user id');
+
+    const newPostData = {
+      post_id: uuidv4(),
+      created_at: new Date(),
+      lat: saveCoords.lat,
+      lon: saveCoords.lon,
+      title: inputRef.current[1].value,
+      contents: inputRef.current[2].value,
+      star: starWidth,
+      user_id: uuidv4()
+    };
+
+    const response = await createPost(newPostData);
+    console.log('REPONSE___', response);
   };
 
   return (
