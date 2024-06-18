@@ -8,6 +8,7 @@ import ReadPage from '../pages/ReadPage';
 import SignUpPage from '../pages/SignUpPage';
 import Layout from '../components/common/Layout';
 import WritePage from '../pages/WritePage/WritePage';
+import DetailPage from '../pages/DetailPage';
 const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -17,8 +18,8 @@ const router = createBrowserRouter([
         element: <HomePage />
       },
       {
-        path: '/feeds/:feedId',
-        element: <ReadPage />
+        path: '/detail/:postId',
+        element: <DetailPage />
       },
       {
         path: '/write',
