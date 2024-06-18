@@ -13,13 +13,13 @@ const Header = () => {
         {/* 로그인이 안 되어 있는 경우에 보여줄 UI */}
         {/* <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => navigate('/log-in')}
+          onClick={() => navigate('/logIn')}
         >
           로그인
         </button>
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => navigate('/sign-up')}
+          onClick={() => navigate('/signUp')}
         >
           회원가입
         </button> */}

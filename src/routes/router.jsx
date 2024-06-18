@@ -29,18 +29,18 @@ const router = createBrowserRouter([
         element: <EditPage />
       },
       {
-        path: '/sign-up',
-        element: <SignUpPage />
-      },
-      {
-        path: '/log-in',
-        element: <LoginPage />
-      },
-      {
         path: '/my-page/:userId',
         element: <MyPage />
       }
     ]
+  },
+  {
+    path: '/signUp',
+    element: <SignUpPage />
+  },
+  {
+    path: '/logIn',
+    element: <LoginPage />
   }
 ]);
 
