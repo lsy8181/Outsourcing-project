@@ -108,23 +108,8 @@ function EditPage() {
 
   const test = async (e) => {
     e.preventDefault();
-    // const res = await supabase.auth.signUp({
-    //   email: 'test@naver.com',
-    //   password: '123123'
-    // });
-    // console.log(res);
 
     console.log('EDIT TEST___');
-    // console.log('POSTID___', postData[0].post_id);
-    // console.log('UPDATE_AT___', new Date());
-    // console.log('ADDRESS___', inputRef.current[0].value);
-    // console.log('LAT___', saveCoords.lat);
-    // console.log('LON___', saveCoords.lon);
-    // console.log('UPDATED_AT___', null);
-    // console.log('TITLE___', inputRef.current[1].value);
-    // console.log('CONTENTS___', inputRef.current[2].value);
-    // console.log('STAR___', starWidth * 10);
-    // console.log('USERID___', 'a7bcdd01-c602-4b1f-bbd7-6e1d03ebb38b');
 
     const newPostData = {
       post_id: postData[0].post_id,
