@@ -6,10 +6,8 @@ import LoginPage from '../pages/LoginPage';
 import MyPage from '../pages/MyPage';
 import ReadPage from '../pages/ReadPage';
 import SignUpPage from '../pages/SignUpPage';
-
 import Layout from '../components/common/Layout';
 import WritePage from '../pages/WritePage/WritePage';
-
 const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -46,5 +44,4 @@ const router = createBrowserRouter([
     element: <LoginPage />
   }
 ]);
-
 export default router;

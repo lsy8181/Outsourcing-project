@@ -75,7 +75,7 @@ const MainMap = () => {
   }, []);
 
   // 지도 객체, 마커 객체, 정보 객체가 모두 설정된 후 지도 클릭 이벤트 리스너 등록
-  // handleMapClick() 함수에서 marker, info가 null인 상태를 방지하기 위함
+  // handleMapClick(); // 함수에서 marker, info가 null인 상태를 방지하기 위함
   useEffect(() => {
     if (map && marker && info) {
       kakao.maps.event.addListener(map, 'click', handleMapClick);
