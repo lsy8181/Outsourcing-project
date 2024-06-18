@@ -4,12 +4,12 @@ import api from '../api/api';
 
 const { kakao } = window;
 
-const { mutateAsync: getPost } = useMutation({
-  mutationFn: () => api.post.getPost()
-});
+// const { mutateAsync: getPost } = useMutation({
+//   mutationFn: () => api.post.getPost()
+// });
 
-const response = await getPost();
-console.log(response);
+// const response = await getPost();
+// console.log(response);
 
 const MainMap = () => {
   const [map, setMap] = useState(null); // 지도 객체
