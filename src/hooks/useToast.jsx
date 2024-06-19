@@ -11,17 +11,17 @@ const ToastContext = createContext(initialValue);
 
 export const useToast = () => useContext(ToastContext);
 
-export default function ToastProvider({ Children }) {
+export default function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
 
   const value = {
     createToast: (options) => {
-      const id = uuidv4();
-      setToasts((prev) => [...prev, { id, ...options }]);
+      const toastId = uuidv4();
+      setToasts((prev) => [...prev, { toastId, ...options }]);
 
-      // setTimeout(()=>{
-      //   setToasts(prev=>prev.filter(toast=>toast.toastId !== id));
-      // },3000)
+      setTimeout(() => {
+        setToasts((prev) => prev.filter((toast) => toast.toastId !== toastId));
+      }, 3000);
     },
     deleteToast: (toastId) => {
       setToasts((prev) => prev.filter((toast) => toast.toastId !== toastId));
@@ -30,11 +30,11 @@ export default function ToastProvider({ Children }) {
 
   return (
     <ToastContext.Provider value={value}>
-      {Children}
+      {children}
       <ul className="fixed bottom-5 right-5 grid grid-cols-1 gap-y-3">
-        {toasts.map(({ toastId, title, content, time }) => (
+        {toasts.map(({ toastId, title, content }) => (
           <li key={toastId}>
-            <Toast title={title} content={content} time={time} />
+            <Toast title={title} content={content} toastId={toastId} />
           </li>
         ))}
       </ul>

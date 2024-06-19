@@ -5,11 +5,13 @@ import Modal from '../../components/Modal';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
 import { useModal } from '../../hooks/useModal';
 import usePost from '../../hooks/usePost';
+import { useToast } from '../../hooks/useToast';
 
 const { kakao } = window;
 
 function EditPage() {
   const nav = useNavigate();
+  const toast = useToast();
   const loaderData = useLoaderData();
   const modal = useModal();
   const { data: postData } = loaderData;
@@ -38,12 +40,12 @@ function EditPage() {
     const container = document.getElementById('map');
 
     const options = {
-      center: new kakao.maps.LatLng(postData[0].lon, postData[0].lat),
+      center: new kakao.maps.LatLng(postData[0].lat, postData[0].lon),
       level: 3
     };
 
     setMap(new kakao.maps.Map(container, options));
-    setMarker(new kakao.maps.Marker({ position: new kakao.maps.LatLng(postData[0].lon, postData[0].lat) }));
+    setMarker(new kakao.maps.Marker({ position: new kakao.maps.LatLng(postData[0].lat, postData[0].lon) }));
   }, [postData]);
 
   // 처음 마커 찍기
@@ -71,7 +73,7 @@ function EditPage() {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
         console.log(coords);
-        setSaveCoords({ lat: result[0].x, lon: result[0].y });
+        setSaveCoords({ lat: result[0].y, lon: result[0].x });
 
         marker.setMap(null);
         marker.setPosition(coords);
@@ -91,7 +93,9 @@ function EditPage() {
   useDidMountEffect(() => {
     kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
       const coords = mouseEvent.latLng;
-      setSaveCoords({ lat: coords.La, lon: coords.Ma });
+      // console.log('위도(Lat)', coords.getLat());
+      // console.log('경도(Lng)', coords.getLng());
+      setSaveCoords({ lat: coords.getLat(), lon: coords.getLng() });
 
       // 위도,경도로 주소 찾기
       geocoder.coord2Address(coords.getLng(), coords.getLat(), (result, status) => {
@@ -115,20 +119,51 @@ function EditPage() {
     const newPostData = {
       post_id: postData[0].post_id,
       // created_at: new Date(),
-      address: inputRef.current[0].value,
+      address: inputRef.current[0].value || null,
       update_at: new Date(),
       lat: saveCoords.lat,
       lon: saveCoords.lon,
-      title: inputRef.current[1].value,
-      contents: inputRef.current[2].value,
+      title: inputRef.current[1].value || null,
+      contents: inputRef.current[2].value || null,
       star: starWidth,
       user_id: 'f476bef7-e9d0-4423-bfac-9e6af8657823'
     };
     console.log('NEW POST DATA___', newPostData);
     const response = await updatePost(newPostData);
     console.log('REPONSE___', response);
+    const { error, data } = response;
 
-    nav('/', { replace: true });
+    if (!data && error) {
+      const { message } = error;
+      const match = message.match(/column "([^"]+)"/);
+
+      let content = '';
+
+      switch (match[1]) {
+        case 'lat':
+          content = '주소를 입력해주세요.';
+          break;
+        case 'title':
+          content = '제목을 입력해주세요.';
+          break;
+        case 'contents':
+          content = '내용을 입력해주세요.';
+          break;
+        default:
+          content = '알수없는 에러가 발생했습니다.';
+      }
+
+      toast.createToast({
+        title: 'FAILED',
+        content
+      });
+    } else {
+      toast.createToast({
+        title: 'SUCCESS',
+        content: '포스트를 성공적으로 수정했습니다.'
+      });
+      nav('/', { replace: true });
+    }
   };
 
   // Post 삭제
@@ -138,7 +173,19 @@ function EditPage() {
     const response = await deletePost(postData[0].post_id);
     console.log('RESPONSE___', response);
 
-    nav('/', { replace: true });
+    const { error, data } = response;
+    if (!data && error) {
+      toast.createToast({
+        title: 'FAILED',
+        content: '포스트 삭제에 실패했습니다.'
+      });
+    } else {
+      toast.createToast({
+        title: 'SUCCESS',
+        content: '포스트를 성공적으로 삭제했습니다.'
+      });
+      nav('/', { replace: true });
+    }
   };
 
   // Modal 열기
