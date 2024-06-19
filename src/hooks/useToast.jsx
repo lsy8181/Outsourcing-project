@@ -32,7 +32,7 @@ export default function ToastProvider({ children }) {
     <ToastContext.Provider value={value}>
       {children}
       <ul className="fixed bottom-5 right-5 grid grid-cols-1 gap-y-3">
-        {toasts.map(({ toastId, title, content, time }) => (
+        {toasts.map(({ toastId, title, content }) => (
           <li key={toastId}>
             <Toast title={title} content={content} toastId={toastId} />
           </li>
