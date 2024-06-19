@@ -28,6 +28,12 @@ class PostAPI {
     console.log('API GET POST___', data);
     return data;
   }
+
+  async getPost(postId) {
+    const response = await this.#supabase.from('posts').select().eq('post_id', postId);
+    console.log('API GET POST___', response);
+    return response;
+  }
 }
 
 export default PostAPI;

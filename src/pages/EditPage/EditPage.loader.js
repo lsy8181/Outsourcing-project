@@ -1,8 +1,8 @@
-import supabase from '../../supabase/supabase';
+import api from '../../api/api';
 
 export default async function editPageLoader({ params }) {
   const { postId } = params;
-  const response = await supabase.from('posts').select().eq('post_id', postId);
+  const response = await api.post.getPost(postId);
   // console.log('EDIT LOADER___', response);
   return response;
 }
