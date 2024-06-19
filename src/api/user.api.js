@@ -22,11 +22,7 @@ class UserAPI {
     const accessToken = localStorage.getItem('accessToken');
     if (accessToken) {
       try {
-        const { data, error } = await this.#supabase
-          .from('users')
-          .update(profileData)
-          .update(profileData)
-          .match({ id: profileData.id });
+        const { data, error } = await this.#supabase.from('users').update(profileData).match({ id: profileData.id });
         if (error) {
           throw new Error(error.message);
         }

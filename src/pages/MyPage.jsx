@@ -55,7 +55,7 @@ function MyPage() {
   }
 
   return (
-    <div className="w-[500px] flex flex-col border border-solid border-slate-300 rounded-xl mx-auto my-100 text-center gap-8 py-8 ">
+    <div className="w-[500px] flex flex-col border border-solid border-slate-300 rounded-xl mx-auto my-24 text-center gap-8 py-8 ">
       <h2>프로필 수정</h2>
       <div className="flex flex-row mx-auto items-center gap-12">
         <div className="flex flex-col gap-5 px-6">
