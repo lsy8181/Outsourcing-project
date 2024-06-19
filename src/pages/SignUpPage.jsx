@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import supabase from '../supabase/supabase';
+import Swal from 'sweetalert2';
 
 function SignUpPage() {
   const navigate = useNavigate();
@@ -31,7 +32,15 @@ function SignUpPage() {
     if (error) {
       setError(error.message);
     } else {
-      console.log(data);
+      Swal.fire({
+        icon: 'success',
+        title: '회원가입 완료',
+        showConfirmButton: 'true'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/logIn');
+        }
+      });
     }
   };
 

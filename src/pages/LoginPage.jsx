@@ -9,6 +9,8 @@ function LoginPage() {
     password: ''
   });
 
+  const [rememberMe, setRememberMe] = useState(false);
+
   const handleSingup = () => {
     navigate('/signUp');
   };
@@ -38,8 +40,7 @@ function LoginPage() {
       <div className="flex items-center justify-center w-1/2 bg-gradient-to-r from-purple-500 to-orange-300">
         <div className="text-white text-5xl font-bold">Welcome Back!</div>
       </div>
-
-      {/* Right side with login form */}
+      .{/* Right side with login form */}
       <div className="flex items-center justify-center w-1/2 bg-white">
         <form className="flex flex-col items-center gap-4 p-6 w-2/3 bg-white shadow-lg rounded" onSubmit={handleSubmit}>
           <div className="text-2xl font-semibold text-gray-800">Login</div>
