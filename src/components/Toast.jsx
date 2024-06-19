@@ -1,24 +1,10 @@
-import { useEffect, useState } from 'react';
 import { useToast } from '../hooks/useToast';
 
-export default function Toast({ title, content, time, toastId }) {
-  const [visible, setVisible] = useState(true);
+export default function Toast({ title, content, toastId }) {
   const toast = useToast();
 
-  useEffect(() => {
-    setTimeout(() => {
-      setTimeout(() => {
-        toast.deleteToast(toastId);
-      }, 500);
-      setVisible(false);
-    }, time);
-  }, [toast, toastId, time]);
-
   const deleteToastHandler = () => {
-    setTimeout(() => {
-      toast.deleteToast(toastId);
-    }, 500);
-    setVisible(false);
+    toast.deleteToast(toastId);
   };
 
   return (

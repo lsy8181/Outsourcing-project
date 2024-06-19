@@ -23,10 +23,16 @@ class PostAPI {
     return response;
   }
 
+  async getPost(postId) {
+    const response = await this.#supabase.from('posts').select().eq('post_id', postId);
+    console.log('API GET POST___', response);
+    return response;
+  }
+
   async getPosts() {
-    const { data } = await this.#supabase.from('posts').select('*').order('created_at', { ascending: false });
-    console.log('API GET POST___', data);
-    return data;
+    const response = await this.#supabase.from('posts').select('*').order('created_at', { ascending: false });
+    console.log('API GET POSTS___', response);
+    return response;
   }
 }
 
