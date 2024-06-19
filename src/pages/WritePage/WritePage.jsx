@@ -24,7 +24,7 @@ function WritePage() {
 
   const { createPost } = usePost();
 
-  console.log(kakao);
+  // console.log(kakao);
 
   const geocoder = new kakao.maps.services.Geocoder();
   const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
@@ -121,6 +121,8 @@ function WritePage() {
       user_id: 'f476bef7-e9d0-4423-bfac-9e6af8657823'
     };
 
+    console.log(newPostData);
+
     const response = await createPost(newPostData);
     console.log('REPONSE___', response);
 
@@ -129,7 +131,7 @@ function WritePage() {
 
   return (
     <main>
-      <div className="max-w-[1440px] bg-red-200 mx-auto flex flex-col items-center p-2 justify-center gap-6">
+      <div className="max-w-[1440px] mx-auto flex flex-col items-center p-2 justify-center gap-6">
         <h1>WritePage</h1>
 
         <div className="max-w-[500px] w-full flex border border-gray-200 divide-x-2 divide-solid">

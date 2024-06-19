@@ -1,4 +1,6 @@
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 const PlaceList = () => {
   const [data, setData] = useState([]);
@@ -15,6 +17,30 @@ const PlaceList = () => {
       ]);
     }
   }, []);
+
+  // const {
+  //   data: places,
+  //   hasNextPage,
+  //   fetchNextPage,
+  //   isFetchingNextPage
+  // } = useInfiniteQuery({
+  //   queryKey: ['places'],
+  //   queryFn: forLoop, // 나중에 이 부분 바꿔야 함
+  //   getNextPageParam: (lastPage) => {
+  //     if (lastPage.page < lastPage.total_pages) return lastPage.page + 1;
+  //   },
+  //   select: (data) => {
+  //     return data.pages.map((pageData) => pageData.results).flat();
+  //   }
+  // });
+
+  // const { ref } = useInView({
+  //   threshold: 0.3,
+  //   onChange: (inView) => {
+  //     if (!inView || !hasNextPage || isFetchingNextPage) return;
+  //     fetchNextPage();
+  //   }
+  // });
 
   useEffect(() => {
     forLoop();
