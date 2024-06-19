@@ -8,6 +8,7 @@ function Comment({ comment_id, users, created_at, content }) {
 
   const onDeleteCommentHandler = async () => {
     const response = await deleteComment(comment_id);
+    console.log('DELETE COMMENT RESPONSE___', response);
 
     const { error, data } = response;
     if (!data && error) {

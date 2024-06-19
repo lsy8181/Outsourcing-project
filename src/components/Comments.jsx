@@ -28,7 +28,6 @@ function Comments() {
       content: inputRef.current.value || null
     };
 
-    console.log(newCommentData);
     const response = await createComment(newCommentData);
     console.log('CREATE COMMENT RESPONSE___', response);
     const { error, data } = response;
