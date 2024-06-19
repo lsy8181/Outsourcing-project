@@ -195,7 +195,7 @@ function EditPage() {
     const yesFn = type === 'DEL' ? onDeletePostHandler : onClickUpdatePostHandler;
     modal.openModal(<Modal title={title} onYesHandler={yesFn} />);
   };
-
+  //♡♥
   return (
     <main>
       <div className="max-w-[1440px]  mx-auto flex flex-col items-center p-2 justify-center gap-6">
@@ -284,7 +284,16 @@ function EditPage() {
               </div>
               <span className="text-lg font-bold">{starWidth / 2}</span>
             </span>
-            <div>이곳인가!</div>
+
+            <div
+              className="cursor-pointer  flex items-center justify-center border border-gray-200 bg-gray-100
+            hover:bg-red-100 hover:text-red-500 hovre:shadow-lg
+            active:bg-red-200 active:text-red-700
+            p-2 text-lg rounded-full size-10 aspect-square"
+            >
+              ♡
+            </div>
+
             <div className="flex gap-2">
               <button
                 onClick={() => onOpenModalHandler('UPD')}
