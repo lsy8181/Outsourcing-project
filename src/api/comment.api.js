@@ -17,6 +17,12 @@ class CommentAPI {
     return response;
   }
 
+  async deleteComment(commentId) {
+    const response = await this.#supabase.from('comments').delete().eq('comment_id', commentId);
+    console.log('API DELETE COMMENT___', response);
+    return response;
+  }
+
   // async updatePost(newPostData) {
   //   const response = await this.#supabase.from('posts').update(newPostData).eq('post_id', newPostData.post_id);
   //   console.log('API UPDATE POST___', response);

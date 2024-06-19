@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useLoaderData } from 'react-router-dom';
 import api from '../api/api';
 
-export default function usePost() {
+export default function useComment() {
   const queryClient = useQueryClient();
   const loaderData = useLoaderData();
   const { data: postData } = loaderData;
@@ -17,9 +17,15 @@ export default function usePost() {
     onSuccess: () => queryClient.invalidateQueries(['comments', postData[0].post_id])
   });
 
+  const { mutateAsync: deleteComment } = useMutation({
+    mutationFn: (commentId) => api.comment.deleteComment(commentId),
+    onSuccess: () => queryClient.invalidateQueries(['comments', postData[0].post_id])
+  });
+
   return {
     comments,
     isLoading,
-    createComment
+    createComment,
+    deleteComment
   };
 }
