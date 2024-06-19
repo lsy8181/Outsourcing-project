@@ -1,7 +1,7 @@
-import MainMap from '../components/MainMap';
-import PlaceList from '../components/PlaceList';
+import MainMap from '../../components/MainMap';
+import PlaceList from '../../components/PlaceList';
 import { useQuery } from '@tanstack/react-query';
-import api from '../api/api';
+import api from '../../api/api';
 
 const HomePage = () => {
   const {
@@ -19,10 +19,10 @@ const HomePage = () => {
   return (
     <>
       {places && (
-        <>
+        <div className="flex flex-col justify-center items-center h-full">
           <MainMap places={places} />
           <PlaceList places={places} />
-        </>
+        </div>
       )}
     </>
   );
