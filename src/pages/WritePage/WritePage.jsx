@@ -3,10 +3,12 @@ import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useNavigate } from 'react-router-dom';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
 import usePost from '../../hooks/usePost';
+import { useToast } from '../../hooks/useToast';
 
 const { kakao } = window;
 
 function WritePage() {
+  const toast = useToast();
   const nav = useNavigate();
   // 맵
   const [map, setMap] = useState(null);
@@ -123,10 +125,15 @@ function WritePage() {
 
     console.log(newPostData);
 
-    const response = await createPost(newPostData);
-    console.log('REPONSE___', response);
+    toast.createToast({
+      title: 'AAA',
+      content: 'BBB',
+      time: 3000
+    });
+    // const response = await createPost(newPostData);
+    // console.log('REPONSE___', response);
 
-    nav('/', { replace: true });
+    // nav('/', { replace: true });
   };
 
   return (
