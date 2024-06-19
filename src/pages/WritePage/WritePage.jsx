@@ -66,7 +66,7 @@ function WritePage() {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
         // console.log('ADDRESS', coords, result[0]);
-        setSaveCoords({ lat: result[0].x, lon: result[0].y });
+        setSaveCoords({ lat: result[0].y, lon: result[0].x });
 
         marker.setMap(null);
         marker.setPosition(coords);
@@ -92,7 +92,9 @@ function WritePage() {
     kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
       const coords = mouseEvent.latLng;
       // console.log('WRITE COORDS', coords);
-      setSaveCoords({ lat: coords.La, lon: coords.Ma });
+      // console.log('위도(Lat)', coords.getLat());
+      // console.log('경도(Lng)', coords.getLng());
+      setSaveCoords({ lat: coords.getLat(), lon: coords.getLng() });
 
       // 위도,경도로 주소 찾기
       geocoder.coord2Address(coords.getLng(), coords.getLat(), (result, status) => {

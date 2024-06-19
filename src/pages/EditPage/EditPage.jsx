@@ -40,12 +40,12 @@ function EditPage() {
     const container = document.getElementById('map');
 
     const options = {
-      center: new kakao.maps.LatLng(postData[0].lon, postData[0].lat),
+      center: new kakao.maps.LatLng(postData[0].lat, postData[0].lon),
       level: 3
     };
 
     setMap(new kakao.maps.Map(container, options));
-    setMarker(new kakao.maps.Marker({ position: new kakao.maps.LatLng(postData[0].lon, postData[0].lat) }));
+    setMarker(new kakao.maps.Marker({ position: new kakao.maps.LatLng(postData[0].lat, postData[0].lon) }));
   }, [postData]);
 
   // 처음 마커 찍기
@@ -73,7 +73,7 @@ function EditPage() {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
         console.log(coords);
-        setSaveCoords({ lat: result[0].x, lon: result[0].y });
+        setSaveCoords({ lat: result[0].y, lon: result[0].x });
 
         marker.setMap(null);
         marker.setPosition(coords);
@@ -93,7 +93,9 @@ function EditPage() {
   useDidMountEffect(() => {
     kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
       const coords = mouseEvent.latLng;
-      setSaveCoords({ lat: coords.La, lon: coords.Ma });
+      // console.log('위도(Lat)', coords.getLat());
+      // console.log('경도(Lng)', coords.getLng());
+      setSaveCoords({ lat: coords.getLat(), lon: coords.getLng() });
 
       // 위도,경도로 주소 찾기
       geocoder.coord2Address(coords.getLng(), coords.getLat(), (result, status) => {
