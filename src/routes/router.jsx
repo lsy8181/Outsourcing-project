@@ -1,13 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom';
+import Layout from '../components/common/Layout';
+import DetailPage from '../pages/DetailPage/DetailPage';
 import EditPage from '../pages/EditPage/EditPage';
 import editPageLoader from '../pages/EditPage/EditPage.loader';
-import HomePage from '../pages/HomePage';
+import HomePage from '../pages/HomePage/HomePage';
 import LoginPage from '../pages/LoginPage';
 import MyPage from '../pages/MyPage';
-import ReadPage from '../pages/ReadPage';
 import SignUpPage from '../pages/SignUpPage';
-import Layout from '../components/common/Layout';
 import WritePage from '../pages/WritePage/WritePage';
+
 const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -17,8 +18,8 @@ const router = createBrowserRouter([
         element: <HomePage />
       },
       {
-        path: '/feeds/:feedId',
-        element: <ReadPage />
+        path: '/detail/:postId',
+        element: <DetailPage />
       },
       {
         path: '/write',

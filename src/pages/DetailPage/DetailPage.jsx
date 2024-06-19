@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import supabase from '../supabase/supabase';
+import supabase from '../../supabase/supabase';
 
 const Detail = () => {
   const [posts, setPosts] = useState([]);
