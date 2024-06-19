@@ -118,7 +118,7 @@ function WritePage() {
       title: inputRef.current[1].value,
       contents: inputRef.current[2].value,
       star: starWidth,
-      user_id: 'a7bcdd01-c602-4b1f-bbd7-6e1d03ebb38b'
+      user_id: 'f476bef7-e9d0-4423-bfac-9e6af8657823'
     };
 
     const response = await createPost(newPostData);
