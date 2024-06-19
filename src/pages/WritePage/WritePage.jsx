@@ -24,7 +24,7 @@ function WritePage() {
 
   const { createPost } = usePost();
 
-  console.log(kakao);
+  // console.log(kakao);
 
   const geocoder = new kakao.maps.services.Geocoder();
   const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
@@ -120,6 +120,8 @@ function WritePage() {
       star: starWidth,
       user_id: 'f476bef7-e9d0-4423-bfac-9e6af8657823'
     };
+
+    console.log(newPostData);
 
     const response = await createPost(newPostData);
     console.log('REPONSE___', response);
