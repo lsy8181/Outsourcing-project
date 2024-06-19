@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import useComment from '../hooks/useComment';
-import { formatDate } from '../utils/formatDate';
+import Comment from './Comment';
 
 /**
  * post_id 어떤 포스트?
@@ -36,24 +36,15 @@ function Comments() {
       className="flex flex-col max-w-[800px] w-full border-t-2 border-gray-200
       border-b-2 bg-gray-100 p-2 "
     >
-      <ul className="w-full divide-y-2 divide-solid divide-gray-200">
+      <ul className="w-full divide-y-2 divide-solid divide-gray-200 px-2">
         {!isLoading &&
           comments.data?.map(({ comment_id, content, created_at, users }) => (
-            <li key={comment_id} className="flex items-center p-2 gap-2 w-full">
-              <img className="size-12 rounded-full" src="http://via.placeholder.com/640x480" alt="tt" />
-              <div className="flex flex-col w-full">
-                <div className="w-full flex justify-between items-center">
-                  <p className="font-bold text-sm">{users.email}</p>
-                  <p className="font-bold text-xs">{formatDate(created_at)}</p>
-                </div>
-                <div className="line-clamp-1">{content}</div>
-              </div>
-            </li>
+            <Comment key={comment_id} comment_id={comment_id} content={content} created_at={created_at} users={users} />
           ))}
       </ul>
 
       <div className="flex flex-col gap-2 ">
-        <textarea ref={inputRef} className="w-full p-2 resize-none" placeholder="댓글" maxLength={20} />
+        <textarea ref={inputRef} className="w-full p-2 resize-none" placeholder="댓글" maxLength={100} />
         <button
           onClick={onCreateCommentHandler}
           className=" py-2 px-6 text-xs rounded-lg border border-gray-300  ml-auto font-bold text-white
