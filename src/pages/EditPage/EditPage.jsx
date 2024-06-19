@@ -284,6 +284,7 @@ function EditPage() {
               </div>
               <span className="text-lg font-bold">{starWidth / 2}</span>
             </span>
+            <div>이곳인가!</div>
             <div className="flex gap-2">
               <button
                 onClick={() => onOpenModalHandler('UPD')}

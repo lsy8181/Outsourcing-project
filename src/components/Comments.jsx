@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import useComment from '../hooks/useComment';
+import { useToast } from '../hooks/useToast';
 import Comment from './Comment';
 
 /**
@@ -11,6 +12,7 @@ import Comment from './Comment';
  * update_at 수정시간
  */
 function Comments() {
+  const toast = useToast();
   const loaderData = useLoaderData();
   const { data: postData } = loaderData;
 
@@ -23,12 +25,27 @@ function Comments() {
       post_id: postData[0].post_id,
       user_id: '463526b1-2a00-4865-bfe8-3fa504683274',
       created_at: new Date(),
-      content: inputRef.current.value
+      content: inputRef.current.value || null
     };
 
     console.log(newCommentData);
     const response = await createComment(newCommentData);
     console.log('CREATE COMMENT RESPONSE___', response);
+    const { error, data } = response;
+
+    if (!data && error) {
+      toast.createToast({
+        title: 'FAILED',
+        content: '댓글 작성에 실패했습니다.'
+      });
+    } else {
+      toast.createToast({
+        title: 'SUCCESS',
+        content: '댓글을 작성했습니다.'
+      });
+
+      inputRef.current.value = '';
+    }
   };
 
   return (
