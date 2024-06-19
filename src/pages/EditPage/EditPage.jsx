@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useLoaderData, useNavigate } from 'react-router-dom';
+import Comments from '../../components/Comments';
 import Modal from '../../components/Modal';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
 import { useModal } from '../../hooks/useModal';
@@ -126,7 +127,7 @@ function EditPage() {
       title: inputRef.current[1].value || null,
       contents: inputRef.current[2].value || null,
       star: starWidth,
-      user_id: 'f476bef7-e9d0-4423-bfac-9e6af8657823'
+      user_id: '463526b1-2a00-4865-bfe8-3fa504683274'
     };
     console.log('NEW POST DATA___', newPostData);
     const response = await updatePost(newPostData);
@@ -194,12 +195,10 @@ function EditPage() {
     const yesFn = type === 'DEL' ? onDeletePostHandler : onClickUpdatePostHandler;
     modal.openModal(<Modal title={title} onYesHandler={yesFn} />);
   };
-
+  //♡♥
   return (
     <main>
       <div className="max-w-[1440px]  mx-auto flex flex-col items-center p-2 justify-center gap-6">
-        <h1>EditPage</h1>
-
         <div className="max-w-[500px] w-full flex border border-gray-200 divide-x-2 divide-solid">
           <div className="relative w-full flex-1">
             <input
@@ -231,8 +230,8 @@ function EditPage() {
         </div>
 
         <div className="max-w-[800px] w-full flex flex-col gap-3">
-          <div className="border border-blue-600 w-full aspect-video mx-auto" id="map" />
-          <div className="border border-violet-600 divide-y-2 divide-solid">
+          <div className="border border-gray-200 w-full aspect-video mx-auto" id="map" />
+          <div className="border border-gray-200 divide-y-2 divide-solid">
             <div className="relative w-full">
               <input
                 ref={(el) => (inputRef.current[1] = el)}
@@ -264,7 +263,7 @@ function EditPage() {
             />
           </div>
 
-          <div className="border border-green-400 flex w-full justify-between items-center select-none">
+          <div className=" flex w-full justify-between items-center select-none">
             <span className="text-3xl h-[40px] flex gap-2 items-baseline">
               <div className="relative cursor-pointer">
                 ☆☆☆☆☆
@@ -285,6 +284,16 @@ function EditPage() {
               </div>
               <span className="text-lg font-bold">{starWidth / 2}</span>
             </span>
+
+            <div
+              className="cursor-pointer  flex items-center justify-center border border-gray-200 bg-gray-100
+            hover:bg-red-100 hover:text-red-500 hovre:shadow-lg
+            active:bg-red-200 active:text-red-700
+            p-2 text-lg rounded-full size-10 aspect-square"
+            >
+              ♡
+            </div>
+
             <div className="flex gap-2">
               <button
                 onClick={() => onOpenModalHandler('UPD')}
@@ -306,6 +315,8 @@ function EditPage() {
             </div>
           </div>
         </div>
+
+        <Comments />
       </div>
     </main>
   );
