@@ -1,6 +1,7 @@
 import useComment from '../hooks/useComment';
 import { formatDate } from '../utils/formatDate';
 
+//TODO 삭제 시 유저 아이디 비교 후 자기꺼만 삭제할 수 있도록 해야함.
 function Comment({ comment_id, users, created_at, content }) {
   const { deleteComment } = useComment();
 
