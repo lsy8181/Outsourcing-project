@@ -199,8 +199,6 @@ function EditPage() {
   return (
     <main>
       <div className="max-w-[1440px]  mx-auto flex flex-col items-center p-2 justify-center gap-6">
-        <h1>EditPage</h1>
-
         <div className="max-w-[500px] w-full flex border border-gray-200 divide-x-2 divide-solid">
           <div className="relative w-full flex-1">
             <input
@@ -232,8 +230,8 @@ function EditPage() {
         </div>
 
         <div className="max-w-[800px] w-full flex flex-col gap-3">
-          <div className="border border-blue-600 w-full aspect-video mx-auto" id="map" />
-          <div className="border border-violet-600 divide-y-2 divide-solid">
+          <div className="border border-gray-200 w-full aspect-video mx-auto" id="map" />
+          <div className="border border-gray-200 divide-y-2 divide-solid">
             <div className="relative w-full">
               <input
                 ref={(el) => (inputRef.current[1] = el)}
@@ -265,7 +263,7 @@ function EditPage() {
             />
           </div>
 
-          <div className="border border-green-400 flex w-full justify-between items-center select-none">
+          <div className=" flex w-full justify-between items-center select-none">
             <span className="text-3xl h-[40px] flex gap-2 items-baseline">
               <div className="relative cursor-pointer">
                 ☆☆☆☆☆
