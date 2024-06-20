@@ -6,7 +6,7 @@ const Header = () => {
   const { userId } = useParams();
 
   return (
-    <header className="bg-blue-100 p-4 mb-2 flex justify-between items-center">
+    <header className="bg-blue-100 p-2 mb-2 flex justify-between items-center">
       <h1 className="text-3xl font-semibold cursor-pointer hover:text-blue-700" onClick={() => navigate('/')}>
         추천합시다👍🏻
       </h1>
@@ -48,7 +48,7 @@ const Header = () => {
 
 const Footer = () => {
   return (
-    <footer className="bg-blue-100 flex justify-center p-14 mt-2">
+    <footer className="bg-blue-100 flex justify-center p-8 mt-2">
       <span className="text-sm">copyright ⓒ sparta coding club</span>
     </footer>
   );
@@ -60,7 +60,7 @@ const Layout = () => {
       <ScrollToTop />
       <Header />
       {/* <main className="flex flex-col justify-center items-center h-full"> */}
-      <main>
+      <main className="flex-1">
         <Outlet />
       </main>
       <Footer />
