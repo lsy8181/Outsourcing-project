@@ -122,7 +122,7 @@ function WritePage() {
       title: inputRef.current[1].value || null,
       contents: inputRef.current[2].value || null,
       star: starWidth,
-      user_id: '463526b1-2a00-4865-bfe8-3fa504683274'
+      user_id: '763e8f67-15f6-490e-9c80-5bbb03ba6905'
     };
 
     // console.log(newPostData);

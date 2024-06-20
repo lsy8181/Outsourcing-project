@@ -30,7 +30,7 @@ class PostAPI {
   }
 
   async getPost(postId) {
-    const response = await this.#supabase.from('posts').select().eq('post_id', postId);
+    const response = await this.#supabase.from('posts').select('*,likes(like_id,user_id)').eq('post_id', postId);
     console.log('API GET POST___', response);
     return response;
   }
