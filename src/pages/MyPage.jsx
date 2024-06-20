@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { updateProfile } from '../auth';
+import api from '../api/api';
 
 function MyPage() {
   const [avatar, setAvatar] = useState(null);
@@ -13,7 +13,7 @@ function MyPage() {
     const formData = new FormData();
     formData.append('nickname', nickname);
     formData.append('avatar', avatar);
-    const response = await updateProfile(formData);
+    const response = await api.user.updateProfile(formData);
 
     if (response) {
       // 프로필 업데이트 성공 시, 로컬스토리지에 저장

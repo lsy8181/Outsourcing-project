@@ -3,10 +3,12 @@ import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useNavigate } from 'react-router-dom';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
 import usePost from '../../hooks/usePost';
+import { useToast } from '../../hooks/useToast';
 
 const { kakao } = window;
 
 function WritePage() {
+  const toast = useToast();
   const nav = useNavigate();
   // 맵
   const [map, setMap] = useState(null);
@@ -24,7 +26,7 @@ function WritePage() {
 
   const { createPost } = usePost();
 
-  console.log(kakao);
+  // console.log(kakao);
 
   const geocoder = new kakao.maps.services.Geocoder();
   const open = useDaumPostcodePopup('https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js');
@@ -64,7 +66,7 @@ function WritePage() {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
         // console.log('ADDRESS', coords, result[0]);
-        setSaveCoords({ lat: result[0].x, lon: result[0].y });
+        setSaveCoords({ lat: result[0].y, lon: result[0].x });
 
         marker.setMap(null);
         marker.setPosition(coords);
@@ -90,7 +92,9 @@ function WritePage() {
     kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
       const coords = mouseEvent.latLng;
       // console.log('WRITE COORDS', coords);
-      setSaveCoords({ lat: coords.La, lon: coords.Ma });
+      // console.log('위도(Lat)', coords.getLat());
+      // console.log('경도(Lng)', coords.getLng());
+      setSaveCoords({ lat: coords.getLat(), lon: coords.getLng() });
 
       // 위도,경도로 주소 찾기
       geocoder.coord2Address(coords.getLng(), coords.getLat(), (result, status) => {
@@ -112,24 +116,57 @@ function WritePage() {
     const newPostData = {
       // post_id: 1,
       created_at: new Date(),
-      address: inputRef.current[0].value,
+      address: inputRef.current[0].value || null,
       lat: saveCoords.lat,
       lon: saveCoords.lon,
-      title: inputRef.current[1].value,
-      contents: inputRef.current[2].value,
+      title: inputRef.current[1].value || null,
+      contents: inputRef.current[2].value || null,
       star: starWidth,
-      user_id: 'a7bcdd01-c602-4b1f-bbd7-6e1d03ebb38b'
+      user_id: 'f476bef7-e9d0-4423-bfac-9e6af8657823'
     };
+
+    // console.log(newPostData);
 
     const response = await createPost(newPostData);
     console.log('REPONSE___', response);
+    const { error, data } = response;
 
-    nav('/', { replace: true });
+    if (!data && error) {
+      const { message } = error;
+      const match = message.match(/column "([^"]+)"/);
+
+      let content = '';
+
+      switch (match[1]) {
+        case 'lat':
+          content = '주소를 입력해주세요.';
+          break;
+        case 'title':
+          content = '제목을 입력해주세요.';
+          break;
+        case 'contents':
+          content = '내용을 입력해주세요.';
+          break;
+        default:
+          content = '알수없는 에러가 발생했습니다.';
+      }
+
+      toast.createToast({
+        title: 'FAILED',
+        content
+      });
+    } else {
+      toast.createToast({
+        title: 'SUCCESS',
+        content: '포스트를 성공적으로 작성했습니다.'
+      });
+      nav('/', { replace: true });
+    }
   };
 
   return (
     <main>
-      <div className="max-w-[1440px] bg-red-200 mx-auto flex flex-col items-center p-2 justify-center gap-6">
+      <div className="max-w-[1440px] mx-auto flex flex-col items-center p-2 justify-center gap-6">
         <h1>WritePage</h1>
 
         <div className="max-w-[500px] w-full flex border border-gray-200 divide-x-2 divide-solid">
