@@ -1,8 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import Comments from '../../components/Comments';
-import Like from '../../components/Like';
 import Modal from '../../components/Modal';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
 import { useModal } from '../../hooks/useModal';
@@ -118,6 +116,7 @@ function EditPage() {
   const onClickUpdatePostHandler = async () => {
     console.log('UPDATE TEST___');
 
+    //TODO user_id 하드코딩
     const newPostData = {
       post_id: postData[0].post_id,
       // created_at: new Date(),
@@ -286,8 +285,6 @@ function EditPage() {
               <span className="text-lg font-bold">{starWidth / 2}</span>
             </span>
 
-            <Like />
-
             <div className="flex gap-2">
               <button
                 onClick={() => onOpenModalHandler('UPD')}
@@ -309,8 +306,6 @@ function EditPage() {
             </div>
           </div>
         </div>
-
-        <Comments />
       </div>
     </main>
   );

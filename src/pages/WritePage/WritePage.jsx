@@ -111,6 +111,7 @@ function WritePage() {
     });
   }, [map, marker]);
 
+  //TODO user_id 하드코딩
   const onClickCreatePostHandler = async () => {
     console.log('WRITE TEST___');
     const newPostData = {

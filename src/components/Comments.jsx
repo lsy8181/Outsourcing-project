@@ -20,10 +20,11 @@ function Comments() {
 
   const { comments, isLoading, createComment } = useComment();
 
+  //TODO user_id 하드코딩
   const onCreateCommentHandler = async () => {
     const newCommentData = {
       post_id: postData[0].post_id,
-      user_id: '463526b1-2a00-4865-bfe8-3fa504683274',
+      user_id: '763e8f67-15f6-490e-9c80-5bbb03ba6905',
       created_at: new Date(),
       content: inputRef.current.value || null
     };

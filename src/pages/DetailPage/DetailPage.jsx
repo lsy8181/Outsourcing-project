@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import Comments from '../../components/Comments';
+import Like from '../../components/Like';
 import './Detail.css';
 
 const Detail = () => {
@@ -51,8 +53,8 @@ const Detail = () => {
 
   return (
     <>
-      <div className=" flex items-center justify-center ">
-        <div>
+      <div className=" flex items-center justify-center">
+        <div className="flex flex-col gap-2">
           <header className="flex">
             <h2 className="text-6xl py-11 m-2 mr-10">{data[0].title}</h2>
             <div className="text-6xl py-11 m-2">{renderStars(data[0].star / 2)}</div>
@@ -60,15 +62,21 @@ const Detail = () => {
           <div id="map" className="w-[1000px] h-[500px] bg-indigo-300 mb-5"></div>
           <div>내용</div>
           <div className="w-[1000px] h-[250px] border-2 border-slate-300 rounded-md">{data[0].contents}</div>
-          <div className="float-right">
-            <button
-              onClick={() => {
-                navigate(`/edit/${data[0].post_id}`);
-              }}
-              className="bg-blue-500 hover:bg-blue-600 rounded-lg p-4 m-2 text-white"
-            >
-              수정 및 삭제
-            </button>
+          <div className="flex justify-center">
+            <Like />
+          </div>
+          <div className="flex w-full">
+            <Comments />
+            <div className="float-right">
+              <button
+                onClick={() => {
+                  navigate(`/edit/${data[0].post_id}`);
+                }}
+                className="bg-blue-500 hover:bg-blue-600 rounded-lg p-4 m-2 text-white"
+              >
+                수정 및 삭제
+              </button>
+            </div>
           </div>
         </div>
       </div>

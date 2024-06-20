@@ -3,6 +3,7 @@ import useLike from '../hooks/useLike';
 function Like() {
   const { likePost, dislikePost, isLike, postData } = useLike();
 
+  //TODO user_id 하드코딩
   const onClickLikeHandler = async () => {
     const likePostData = {
       post_id: postData[0].post_id,
