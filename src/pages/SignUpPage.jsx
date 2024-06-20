@@ -49,7 +49,7 @@ function SignUpPage() {
       return;
     }
 
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -63,15 +63,30 @@ function SignUpPage() {
     if (error) {
       setError(error.message);
     } else {
-      Swal.fire({
-        icon: 'success',
-        title: '회원가입 완료',
-        showConfirmButton: 'true'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate('/logIn');
+      const user = data.user;
+
+      const { data: insertData, error: insertError } = await supabase.from('users').insert([
+        {
+          id: user.id,
+          email: user.email,
+          firstName: firstName,
+          lastName: lastName
         }
-      });
+      ]);
+
+      if (insertError) {
+        setError(insertError.message);
+      } else {
+        Swal.fire({
+          icon: 'success',
+          title: '회원가입 완료',
+          showConfirmButton: 'true'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate('/logIn');
+          }
+        });
+      }
     }
   };
 
