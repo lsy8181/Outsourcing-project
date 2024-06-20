@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import api from '../api/api';
+import api from '../../api/api';
 
 function MyPage() {
   const [avatar, setAvatar] = useState(null);
