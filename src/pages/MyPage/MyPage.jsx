@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import api from '../api/api';
+import api from '../../api/api';
 
 function MyPage() {
   const [avatar, setAvatar] = useState(null);
@@ -7,8 +7,8 @@ function MyPage() {
   const [nickname, setNickname] = useState('');
 
   const handleUpdateProfile = async () => {
-    console.log(avatar);
-    console.log(nickname);
+    // console.log(avatar);
+    // console.log(nickname);
 
     const formData = new FormData();
     formData.append('nickname', nickname);
