@@ -1,64 +1,79 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useCallback, useEffect, useState } from 'react';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { Link } from 'react-router-dom';
+import api from '../api/api';
+
+const { kakao } = window;
+const ITEMS_PER_PAGE = 4;
 
 const PlaceList = () => {
-  const [data, setData] = useState([]);
+  const staticMapRef = useRef([]); // 정적 지도를 렌더링할 DOM 요소
 
-  const forLoop = useCallback(() => {
-    for (let i = 0; i < 50; i++) {
-      setData((prev) => [
-        ...prev,
-        {
-          img: '지도 이미지',
-          place: '장소 이름',
-          star: '별점'
-        }
-      ]);
-    }
-  }, []);
+  const {
+    data: allPlaces,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage
+  } = useInfiniteQuery({
+    queryKey: ['allPlaces'],
+    queryFn: ({ pageParam = 0 }) => api.post.fetchPlaces({ pageParam }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      if (!lastPage) return undefined; // lastPage가 undefined인 경우 처리
+      const nextPage = lastPageParam + 1;
+      return lastPage.length === ITEMS_PER_PAGE ? nextPage : undefined;
+    },
+    select: ({ pages }) => pages.flat()
+  });
 
-  // const {
-  //   data: places,
-  //   hasNextPage,
-  //   fetchNextPage,
-  //   isFetchingNextPage
-  // } = useInfiniteQuery({
-  //   queryKey: ['places'],
-  //   queryFn: forLoop, // 나중에 이 부분 바꿔야 함
-  //   getNextPageParam: (lastPage) => {
-  //     if (lastPage.page < lastPage.total_pages) return lastPage.page + 1;
-  //   },
-  //   select: (data) => {
-  //     return data.pages.map((pageData) => pageData.results).flat();
-  //   }
-  // });
-
-  // const { ref } = useInView({
-  //   threshold: 0.3,
-  //   onChange: (inView) => {
-  //     if (!inView || !hasNextPage || isFetchingNextPage) return;
-  //     fetchNextPage();
-  //   }
-  // });
+  const { ref, inView } = useInView({
+    threshold: 0.5
+  });
 
   useEffect(() => {
-    forLoop();
-  }, []);
+    if (inView && hasNextPage && !isFetchingNextPage) fetchNextPage();
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  useEffect(() => {
+    staticMapRef.current.forEach((ref) => {
+      allPlaces?.forEach((place) => {
+        if (ref && ref.id == place.post_id) {
+          const container = ref;
+          // 정적 지도와 마커 생성
+          const location = new kakao.maps.LatLng(place.lat, place.lon);
+          const marker = {
+            position: location
+          };
+          const options = {
+            center: location,
+            level: 3,
+            marker: marker
+          };
+          const staticMap = new kakao.maps.StaticMap(container, options);
+        }
+      });
+    });
+  }, [allPlaces]);
 
   return (
-    <section className="border border-blue-300 mt-5" style={{ width: '1300px' }}>
+    <section className="border border-blue-300 mt-5" style={{ width: '1400px' }}>
       <ul className="grid grid-cols-4 gap-6">
-        {/* 나중에 li 태그를 Link 태그로 변경 or li 태그에 navigate() 함수 사용 */}
-        {data.map((obj, index) => (
-          <li key={index} className="border border-gray-300 p-2">
-            <div className="border" style={{ width: '100%', height: '150px' }}>
-              {obj.img}
-            </div>
-            <p>{obj.place}</p>
-            <p>{obj.star}</p>
-          </li>
-        ))}
+        {allPlaces?.map((obj, index) => {
+          return (
+            <Link to={`/detail/${obj.post_id}`} ref={ref} key={obj.post_id} className="border border-gray-300 p-2">
+              <div
+                ref={(e) => (staticMapRef.current[index] = e)}
+                id={obj.post_id}
+                className="border"
+                style={{ width: '100%', height: '200px' }}
+              ></div>
+              <p className="font-semibold text-lg">📍{obj.title}</p>
+              <p>⭐{obj.star / 2}</p>
+              <p className="text-sm">🗒️{obj.address}</p>
+            </Link>
+          );
+        })}
       </ul>
     </section>
   );
