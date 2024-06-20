@@ -3,6 +3,8 @@ import ModalContextProvider from './hooks/useModal';
 import ToastProvider from './hooks/useToast';
 import QueryProvider from './query/QueryProvider';
 import router from './routes/router';
+import { SignupContextProvider } from './context/SignupContext';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 //TODO 삭제 시 유저 아이디 비교 후 자기꺼만 삭제할 수 있도록 해야함.
 //TODO 댓글도 로그인 해야만 쓸 수 있도록 해야함.
@@ -12,11 +14,15 @@ import router from './routes/router';
 function App() {
   return (
     <QueryProvider>
+      {/* <ReactQueryDevtools initialIsOpen={false}> */}
       <ModalContextProvider>
-        <ToastProvider>
-          <RouterProvider router={router} />
-        </ToastProvider>
+        <SignupContextProvider>
+          <ToastProvider>
+            <RouterProvider router={router} />
+          </ToastProvider>
+        </SignupContextProvider>
       </ModalContextProvider>
+      {/* </ReactQueryDevtools> */}
     </QueryProvider>
   );
 }

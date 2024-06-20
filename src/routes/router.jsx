@@ -9,6 +9,8 @@ import MyPage from '../pages/MyPage';
 import SignUpPage from '../pages/SignUpPage';
 import WritePage from '../pages/WritePage/WritePage';
 import detailPageLoader from '../pages/DetailPage/DetailPage.loader';
+import TermsOfService from '../pages/LoginPage/TermsOfService';
+
 const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -44,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: '/logIn',
     element: <LoginPage />
+  },
+  {
+    path: '/service',
+    element: <TermsOfService />
   }
 ]);
 export default router;

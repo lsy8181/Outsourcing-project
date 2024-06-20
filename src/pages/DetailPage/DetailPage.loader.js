@@ -1,8 +1,8 @@
-import api from '../../api/api';
+import supabase from '../../supabase/supabase';
 
 export default async function detailPageLoader({ params }) {
   const { postId } = params;
-  const response = await api.post.getPost(postId);
+  const response = await supabase.from('posts').select().eq('post_id', postId);
   // console.log('EDIT LOADER___', response);
   return response;
 }
