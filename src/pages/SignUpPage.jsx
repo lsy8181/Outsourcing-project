@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import supabase from '../supabase/supabase';
 import Swal from 'sweetalert2';
+import { SignupContext } from '../context/SignupContext';
 
 function SignUpPage() {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ function SignUpPage() {
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [error, setError] = useState('');
-  const [checkBox, setCheckBox] = useState(false);
+  const { checkboxState } = useContext(SignupContext);
 
   const handleSingIn = () => {
     navigate('/logIn');
@@ -43,12 +44,12 @@ function SignUpPage() {
       return;
     }
 
-    if (!checkBox) {
+    if (!checkboxState) {
       setError('이용 약관에 동의해주세요');
       return;
     }
 
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -74,7 +75,8 @@ function SignUpPage() {
     }
   };
 
-  console.log(checkBox);
+  console.log(checkboxState);
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-pink-500 to-yellow-300">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
@@ -131,18 +133,12 @@ function SignUpPage() {
             Sign up
           </button>
           <div className="flex items-center mt-4">
-            <input
-              type="checkbox"
-              id="terms"
-              className="mr-2"
-              checked={checkBox}
-              onChange={() => setCheckBox(!checkBox)}
-            />
+            <input type="checkbox" id="terms" className="mr-2" checked={checkboxState} onChange={() => {}} disabled />
             <label htmlFor="terms" className="text-gray-600">
               I have read and agree to the{' '}
-              <a href="#" className="text-indigo-500" onClick={() => navigate('/service')}>
+              <Link to="/service" className="text-indigo-500">
                 Terms of Service
-              </a>
+              </Link>
             </label>
           </div>
         </form>
