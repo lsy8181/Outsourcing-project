@@ -122,7 +122,7 @@ function WritePage() {
       title: inputRef.current[1].value || null,
       contents: inputRef.current[2].value || null,
       star: starWidth,
-      user_id: 'f476bef7-e9d0-4423-bfac-9e6af8657823'
+      user_id: '763e8f67-15f6-490e-9c80-5bbb03ba6905'
     };
 
     // console.log(newPostData);
@@ -199,8 +199,8 @@ function WritePage() {
         </div>
 
         <div className="max-w-[800px] w-full flex flex-col gap-3">
-          <div className="border border-blue-600 w-full aspect-video mx-auto" id="map" />
-          <div className="border border-violet-600 divide-y-2 divide-solid">
+          <div className="border border-gray-200 w-full aspect-video mx-auto" id="map" />
+          <div className="border border-gray-200 divide-y-2 divide-solid">
             <div className="relative w-full">
               <input
                 ref={(el) => (inputRef.current[1] = el)}
@@ -230,7 +230,7 @@ function WritePage() {
             />
           </div>
 
-          <div className="border border-green-400 flex w-full justify-between items-center  select-none">
+          <div className="flex w-full justify-between items-center  select-none">
             <span className="text-3xl h-[40px] flex gap-2 items-baseline">
               <div className="relative cursor-pointer">
                 ☆☆☆☆☆
