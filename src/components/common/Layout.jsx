@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
-import ScrollToTop from './ScrollToTop';
 import { useAuth } from '../../context/AuthContext';
+import ScrollToTop from './ScrollToTop';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Header = () => {
   const nickname = user?.nickname || '닉네임';
 
   return (
-    <header className="bg-blue-100 p-4 mb-2 flex justify-between items-center">
+    <header className="bg-blue-100 p-2 mb-2 flex justify-between items-center">
       <h1 className="text-3xl font-semibold cursor-pointer hover:text-blue-700" onClick={() => navigate('/')}>
         Local Spot
       </h1>
@@ -64,7 +64,7 @@ const Header = () => {
 
 const Footer = () => {
   return (
-    <footer className="bg-blue-100 flex justify-center p-14 mt-2">
+    <footer className="bg-blue-100 flex justify-center p-8 mt-2">
       <span className="text-sm">copyright ⓒ sparta coding club</span>
     </footer>
   );
@@ -75,7 +75,7 @@ const Layout = () => {
     <>
       <ScrollToTop />
       <Header />
-      <main>
+      <main className="flex-1">
         <Outlet />
       </main>
       <Footer />

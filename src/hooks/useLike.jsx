@@ -7,6 +7,7 @@ export default function useLike() {
   const loaderData = useLoaderData();
   const { data: postData } = loaderData;
 
+  //TODO user_id 하드코딩
   const getLikeData = {
     post_id: postData[0].post_id,
     user_id: '763e8f67-15f6-490e-9c80-5bbb03ba6905'
@@ -39,11 +40,14 @@ export default function useLike() {
 
   const { mutate: dislikePost } = useMutation({
     mutationFn: (disLikePostData) => api.like.disLikePost(disLikePostData),
-    onMutate: async (likePostData) => {
+    onMutate: async (disLikePostData) => {
+      console.log(disLikePostData);
       await queryClient.cancelQueries({ queryKey: ['likes', postData[0].post_id] });
       const prevLikes = queryClient.getQueryData(['likes', postData[0].post_id]);
       queryClient.setQueryData(['likes', postData[0].post_id], (old) => {
-        return [...old, likePostData];
+        return old
+          .filter((like) => like.user_id !== disLikePostData.user_id)
+          .filter((like) => like.post_id_id !== disLikePostData.post_id_id);
       });
 
       return prevLikes;

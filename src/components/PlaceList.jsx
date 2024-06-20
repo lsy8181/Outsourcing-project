@@ -1,5 +1,5 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-router-dom';
 import api from '../api/api';
@@ -57,7 +57,7 @@ const PlaceList = () => {
   }, [allPlaces]);
 
   return (
-    <section className="border border-blue-300 mt-5" style={{ width: '1400px' }}>
+    <section className="mt-5" style={{ width: '1400px' }}>
       <ul className="grid grid-cols-4 gap-6">
         {allPlaces?.map((obj, index) => {
           return (

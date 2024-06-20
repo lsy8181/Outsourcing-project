@@ -1,6 +1,6 @@
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import api from '../api/api';
 
 const { kakao } = window;
@@ -9,7 +9,6 @@ const MainMap = () => {
   const [mapObj, setMapObj] = useState(null); // 지도 객체
   const mapRef = useRef(null); // 지도를 렌더링할 DOM 요소
   const navigate = useNavigate();
-
   const { data: places } = useQuery({
     queryKey: ['places'],
     queryFn: () => api.post.getPosts()

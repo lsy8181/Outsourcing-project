@@ -5,13 +5,12 @@ import EditPage from '../pages/EditPage/EditPage';
 import editPageLoader from '../pages/EditPage/EditPage.loader';
 import HomePage from '../pages/HomePage/HomePage';
 import LoginPage from '../pages/LoginPage';
-import MyPage from '../pages/MyPage';
+
 import SignUpPage from '../pages/SignUpPage';
 import WritePage from '../pages/WritePage/WritePage';
+import detailPageLoader from '../pages/DetailPage/DetailPage.loader';
 import TermsOfService from '../pages/LoginPage/TermsOfService';
-
-
-
+import MyPage from '../pages/MyPage/MyPage';
 const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -22,7 +21,8 @@ const router = createBrowserRouter([
       },
       {
         path: '/detail/:postId',
-        element: <DetailPage />
+        element: <DetailPage />,
+        loader: detailPageLoader
       },
       {
         path: '/write',
