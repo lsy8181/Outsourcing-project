@@ -5,7 +5,6 @@ class UserAPI {
   #supabase;
 
   constructor(supabase) {
-    console.log(supabase);
     this.#supabase = supabase;
   }
 
@@ -13,7 +12,8 @@ class UserAPI {
     try {
       const id = await getId();
       console.log(id);
-      const { data, error } = await this.#supabase.from('users').select('*').eq('id', id);
+      const { data, error } = await this.#supabase.from('users').select('*');
+      // const { data, error } = await this.#supabase.from('users').select('*').eq('id', id);
       console.log(data);
       if (error) {
         throw new Error(error.message);
@@ -31,9 +31,9 @@ class UserAPI {
     const accessToken = localStorage.getItem('accessToken');
     console.log('accessToken:', accessToken);
     if (accessToken) {
-      const id = getId();
       try {
-        const { data, error } = await this.#supabase.from('users').update(profileData).eq('id', id).single();
+        const id = await getId();
+        const { data, error } = await this.#supabase.from('users').update(profileData).eq('id', id);
 
         if (error) {
           throw new Error(error.message);

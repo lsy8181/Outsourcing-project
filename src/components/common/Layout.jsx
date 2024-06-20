@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
+import ScrollToTop from './ScrollToTop';
 
 const Header = ({ nickname, avatarUrl }) => {
   const navigate = useNavigate();
@@ -60,6 +61,7 @@ const Layout = () => {
 
   return (
     <>
+      <ScrollToTop />
       <Header nickname={nickname} avatarUrl={avatarUrl} />
       {/* <main className="flex flex-col justify-center items-center h-full"> */}
       <main>

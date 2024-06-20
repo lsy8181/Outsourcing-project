@@ -8,6 +8,8 @@ import LoginPage from '../pages/LoginPage';
 import MyPage from '../pages/MyPage';
 import SignUpPage from '../pages/SignUpPage';
 import WritePage from '../pages/WritePage/WritePage';
+import detailPageLoader from '../pages/DetailPage/DetailPage.loader';
+import TermsOfService from '../pages/LoginPage/TermsOfService';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +21,8 @@ const router = createBrowserRouter([
       },
       {
         path: '/detail/:postId',
-        element: <DetailPage />
+        element: <DetailPage />,
+        loader: detailPageLoader
       },
       {
         path: '/write',
@@ -43,6 +46,10 @@ const router = createBrowserRouter([
   {
     path: '/logIn',
     element: <LoginPage />
+  },
+  {
+    path: '/service',
+    element: <TermsOfService />
   }
 ]);
 export default router;

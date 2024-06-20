@@ -9,6 +9,5 @@ export const getId = async () => {
     },
     error
   } = await supabase.auth.getSession();
-  console.log(id);
   return id;
 };

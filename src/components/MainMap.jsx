@@ -1,12 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import api from '../api/api';
 
 const { kakao } = window;
 
-const MainMap = ({ places }) => {
+const MainMap = () => {
   const [mapObj, setMapObj] = useState(null); // 지도 객체
   const mapRef = useRef(null); // 지도를 렌더링할 DOM 요소
   const navigate = useNavigate();
+
+  const { data: places } = useQuery({
+    queryKey: ['places'],
+    queryFn: () => api.post.getPosts()
+  });
 
   const zoomInMap = () => {
     if (mapObj) {
@@ -22,14 +29,6 @@ const MainMap = ({ places }) => {
     }
   };
 
-  // const handleMapClick = (mouseEvent) => {
-  //   const latlng = mouseEvent.latLng; // 클릭한 위치의 좌표
-  //   if (marker && info) {
-  //     marker.setPosition(latlng); // 마커 위치 설정
-  //     info.open(map, marker); // 정보 설정
-  //   }
-  // };
-
   useEffect(() => {
     const container = mapRef.current; // 지도를 담을 영역의 DOM 레퍼런스
     const options = {
@@ -43,7 +42,8 @@ const MainMap = ({ places }) => {
 
     // 여러 개 마커 표시하기
     const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png';
-    for (let i = 0; i < places.length; i++) {
+    const length = places?.length > 0 ? places.length : 0;
+    for (let i = 0; i < length; i++) {
       const imageSize = new kakao.maps.Size(30, 43.75);
       const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
       const marker = new kakao.maps.Marker({
