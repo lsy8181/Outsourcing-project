@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import Comments from '../../components/Comments';
+import Like from '../../components/Like';
 import Modal from '../../components/Modal';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
 import { useModal } from '../../hooks/useModal';
@@ -127,7 +128,7 @@ function EditPage() {
       title: inputRef.current[1].value || null,
       contents: inputRef.current[2].value || null,
       star: starWidth,
-      user_id: '463526b1-2a00-4865-bfe8-3fa504683274'
+      user_id: '763e8f67-15f6-490e-9c80-5bbb03ba6905'
     };
     console.log('NEW POST DATA___', newPostData);
     const response = await updatePost(newPostData);
@@ -285,14 +286,7 @@ function EditPage() {
               <span className="text-lg font-bold">{starWidth / 2}</span>
             </span>
 
-            <div
-              className="cursor-pointer  flex items-center justify-center border border-gray-200 bg-gray-100
-            hover:bg-red-100 hover:text-red-500 hovre:shadow-lg
-            active:bg-red-200 active:text-red-700
-            p-2 text-lg rounded-full size-10 aspect-square"
-            >
-              ♡
-            </div>
+            <Like />
 
             <div className="flex gap-2">
               <button
