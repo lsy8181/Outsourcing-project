@@ -12,7 +12,7 @@ function SignUpPage() {
   const [lastName, setLastName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [error, setError] = useState('');
-  const { checkboxState } = useContext(SignupContext);
+  const { checkboxState, setCheckboxState } = useContext(SignupContext);
 
   const handleSingIn = () => {
     navigate('/logIn');
@@ -69,6 +69,7 @@ function SignUpPage() {
         {
           id: user.id,
           email: user.email,
+          pwd: password,
           firstName: firstName,
           lastName: lastName
         }
@@ -151,7 +152,7 @@ function SignUpPage() {
             <input type="checkbox" id="terms" className="mr-2" checked={checkboxState} onChange={() => {}} disabled />
             <label htmlFor="terms" className="text-gray-600">
               I have read and agree to the{' '}
-              <Link to="/service" className="text-indigo-500">
+              <Link to="/service" target="_blank" className="text-indigo-500" onClick={() => setCheckboxState(true)}>
                 Terms of Service
               </Link>
             </label>

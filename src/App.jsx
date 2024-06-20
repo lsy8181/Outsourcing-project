@@ -4,6 +4,7 @@ import ToastProvider from './hooks/useToast';
 import QueryProvider from './query/QueryProvider';
 import router from './routes/router';
 import { SignupContextProvider } from './context/SignupContext';
+import { AuthProvider } from './context/AuthContext';
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 //TODO 삭제 시 유저 아이디 비교 후 자기꺼만 삭제할 수 있도록 해야함.
@@ -17,9 +18,11 @@ function App() {
       {/* <ReactQueryDevtools initialIsOpen={false}> */}
       <ModalContextProvider>
         <SignupContextProvider>
-          <ToastProvider>
-            <RouterProvider router={router} />
-          </ToastProvider>
+          <AuthProvider>
+            <ToastProvider>
+              <RouterProvider router={router} />
+            </ToastProvider>
+          </AuthProvider>
         </SignupContextProvider>
       </ModalContextProvider>
       {/* </ReactQueryDevtools> */}
