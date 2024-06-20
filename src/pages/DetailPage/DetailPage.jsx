@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import Comments from '../../components/Comments';
 import Like from '../../components/Like';
+import { useAuth } from '../../context/AuthContext';
 import './Detail.css';
 
 const Detail = () => {
   const navigate = useNavigate();
   const loadData = useLoaderData();
-
+  const { isLoggedIn } = useAuth();
   const { data } = loadData;
 
   const renderStars = (rating) => {
@@ -59,20 +60,24 @@ const Detail = () => {
           <div id="map" className="w-[1000px] h-[500px] bg-indigo-300 mb-5"></div>
           <div>내용</div>
           <div className="w-[1000px] h-[250px] border-2 border-slate-300 rounded-md">{data[0].contents}</div>
-          <div className="flex justify-center items-center gap-2">
-            <Like />
-            <button
-              onClick={() => {
-                navigate(`/edit/${data[0].post_id}`);
-              }}
-              className="bg-blue-500 hover:bg-blue-600 rounded-lg p-4  text-white text-xs"
-            >
-              수정 및 삭제
-            </button>
-          </div>
-          <div className="flex w-full">
-            <Comments />
-          </div>
+          {isLoggedIn && (
+            <>
+              <div className="flex justify-center items-center gap-2">
+                <Like />
+                <button
+                  onClick={() => {
+                    navigate(`/edit/${data[0].post_id}`);
+                  }}
+                  className="bg-blue-500 hover:bg-blue-600 rounded-lg p-4  text-white text-xs"
+                >
+                  수정 및 삭제
+                </button>
+              </div>
+              <div className="flex w-full">
+                <Comments />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>
