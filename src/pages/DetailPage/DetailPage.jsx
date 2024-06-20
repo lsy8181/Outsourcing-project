@@ -59,21 +59,19 @@ const Detail = () => {
           <div id="map" className="w-[1000px] h-[500px] bg-indigo-300 mb-5"></div>
           <div>내용</div>
           <div className="w-[1000px] h-[250px] border-2 border-slate-300 rounded-md">{data[0].contents}</div>
-          <div className="flex justify-center">
+          <div className="flex justify-center items-center gap-2">
             <Like />
+            <button
+              onClick={() => {
+                navigate(`/edit/${data[0].post_id}`);
+              }}
+              className="bg-blue-500 hover:bg-blue-600 rounded-lg p-4  text-white text-xs"
+            >
+              수정 및 삭제
+            </button>
           </div>
           <div className="flex w-full">
             <Comments />
-            <div className="float-right">
-              <button
-                onClick={() => {
-                  navigate(`/edit/${data[0].post_id}`);
-                }}
-                className="bg-blue-500 hover:bg-blue-600 rounded-lg p-4 m-2 text-white"
-              >
-                수정 및 삭제
-              </button>
-            </div>
           </div>
         </div>
       </div>
