@@ -8,7 +8,6 @@ import LoginPage from '../pages/LoginPage';
 import MyPage from '../pages/MyPage';
 import SignUpPage from '../pages/SignUpPage';
 import WritePage from '../pages/WritePage/WritePage';
-import DetailPage from '../pages/DetailPage/DetailPage';
 import detailPageLoader from '../pages/DetailPage/DetailPage.loader';
 const router = createBrowserRouter([
   {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
+import './Detail.css';
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -8,26 +9,20 @@ const Detail = () => {
   const { data } = loadData;
 
   const renderStars = (rating) => {
-    const totalStars = 10;
-    const filledStars = Math.round(rating);
-    const emptyStars = totalStars - filledStars;
+    const totalStars = 5;
+    const filledStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
 
     return (
       <>
         {Array(filledStars)
           .fill('★')
           .map((star, index) => (
-            <span key={`filled-${index}`} className="text-yellow-500">
+            <span key={`filled-${index}`} className="star">
               {star}
             </span>
           ))}
-        {Array(emptyStars)
-          .fill('☆')
-          .map((star, index) => (
-            <span key={`empty-${index}`} className="text-gray-300">
-              {star}
-            </span>
-          ))}
+        {hasHalfStar && <span key="half" className="half-star"></span>}
       </>
     );
   };
@@ -60,7 +55,7 @@ const Detail = () => {
         <div>
           <header className="flex">
             <h2 className="text-6xl py-11 m-2 mr-10">{data[0].title}</h2>
-            <div className="text-6xl py-11 m-2">{renderStars(data[0].star)}</div>
+            <div className="text-6xl py-11 m-2">{renderStars(data[0].star / 2)}</div>
           </header>
           <div id="map" className="w-[1000px] h-[500px] bg-indigo-300 mb-5"></div>
           <div>내용</div>
