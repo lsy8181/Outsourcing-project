@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import supabase from '../supabase/supabase';
 import { AuthContext } from '../context/AuthContext';
+import '../css/LoginPage.css';
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -63,7 +64,19 @@ function LoginPage() {
   return (
     <div className="flex min-h-screen">
       <div className="flex items-center justify-center w-1/2 bg-gradient-to-r from-purple-500 to-orange-300">
-        <div className="text-white text-5xl font-bold">Welcome Back!</div>
+        <h1>
+          <span>L</span>
+          <span>o</span>
+          <span>c</span>
+          <span>a</span>
+          <span>l</span>
+          <span>&ensp;</span>
+          <span>S</span>
+          <span>p</span>
+          <span>o</span>
+          <span>t</span>
+          <span>!</span>
+        </h1>
       </div>
       <div className="flex items-center justify-center w-1/2 bg-white">
         <form className="flex flex-col items-center gap-4 p-6 w-2/3 bg-white shadow-lg rounded" onSubmit={handleSubmit}>
