@@ -7,8 +7,8 @@ function MyPage() {
   const [nickname, setNickname] = useState('');
 
   const handleUpdateProfile = async () => {
-    console.log(avatar);
-    console.log(nickname);
+    // console.log(avatar);
+    // console.log(nickname);
 
     const formData = new FormData();
     formData.append('nickname', nickname);

@@ -30,7 +30,7 @@ function Comments() {
     };
 
     const response = await createComment(newCommentData);
-    console.log('CREATE COMMENT RESPONSE___', response);
+    // console.log('CREATE COMMENT RESPONSE___', response);
     const { error, data } = response;
 
     if (!data && error) {

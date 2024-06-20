@@ -113,7 +113,7 @@ function WritePage() {
 
   //TODO user_id 하드코딩
   const onClickCreatePostHandler = async () => {
-    console.log('WRITE TEST___');
+    // console.log('WRITE TEST___');
     const newPostData = {
       // post_id: 1,
       created_at: new Date(),
@@ -129,7 +129,7 @@ function WritePage() {
     // console.log(newPostData);
 
     const response = await createPost(newPostData);
-    console.log('REPONSE___', response);
+    // console.log('REPONSE___', response);
     const { error, data } = response;
 
     if (!data && error) {

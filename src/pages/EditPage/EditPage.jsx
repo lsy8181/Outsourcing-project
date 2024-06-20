@@ -72,7 +72,7 @@ function EditPage() {
     geocoder.addressSearch(fullAddress, function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-        console.log(coords);
+        // console.log(coords);
         setSaveCoords({ lat: result[0].y, lon: result[0].x });
 
         marker.setMap(null);
@@ -114,7 +114,7 @@ function EditPage() {
 
   // Post 수정
   const onClickUpdatePostHandler = async () => {
-    console.log('UPDATE TEST___');
+    // console.log('UPDATE TEST___');
 
     //TODO user_id 하드코딩
     const newPostData = {
@@ -129,9 +129,9 @@ function EditPage() {
       star: starWidth,
       user_id: '763e8f67-15f6-490e-9c80-5bbb03ba6905'
     };
-    console.log('NEW POST DATA___', newPostData);
+    // console.log('NEW POST DATA___', newPostData);
     const response = await updatePost(newPostData);
-    console.log('REPONSE___', response);
+    // console.log('REPONSE___', response);
     const { error, data } = response;
 
     if (!data && error) {
@@ -169,10 +169,10 @@ function EditPage() {
 
   // Post 삭제
   const onDeletePostHandler = async () => {
-    console.log('DELETE TEST___');
+    // console.log('DELETE TEST___');
 
     const response = await deletePost(postData[0].post_id);
-    console.log('RESPONSE___', response);
+    // console.log('RESPONSE___', response);
 
     const { error, data } = response;
     if (!data && error) {

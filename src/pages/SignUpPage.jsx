@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import supabase from '../supabase/supabase';
 import Swal from 'sweetalert2';
 import { SignupContext } from '../context/SignupContext';
+import supabase from '../supabase/supabase';
 
 function SignUpPage() {
   const navigate = useNavigate();
@@ -90,7 +90,7 @@ function SignUpPage() {
     }
   };
 
-  console.log(checkboxState);
+  // console.log(checkboxState);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-pink-500 to-yellow-300">

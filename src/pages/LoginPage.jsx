@@ -58,20 +58,20 @@ function LoginPage() {
     }
   };
 
-  console.log(error.message);
+  // console.log(error.message);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
   };
 
-  console.log(userData);
+  // console.log(userData);
 
   const handleRemember = (e) => {
     setRememberMe(e.target.checked);
   };
 
-  console.log(rememberMe);
+  // console.log(rememberMe);
   return (
     <div className="flex min-h-screen">
       {/* Left side with gradient background */}
