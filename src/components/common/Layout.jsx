@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
 
-const Header = () => {
+const Header = ({ nickname, avatarUrl }) => {
   const navigate = useNavigate();
   const { userId } = useParams();
 
@@ -25,13 +26,8 @@ const Header = () => {
         </button> */}
         {/* 로그인이 되어 있는 경우에 보여줄 UI */}
         <Link to={`/my-page/${userId}`} className="flex gap-2 items-center">
-          <img
-            src="https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_640.jpg"
-            alt="임시 프로필 사진"
-            width="60px"
-            className="rounded-full"
-          />
-          <p className="mr-4 hover:font-semibold">(닉네임)님, 안녕하세요!</p>
+          <img src={avatarUrl} alt="임시 프로필 사진" width="60px" className="rounded-full" />
+          <p className="mr-4 hover:font-semibold">{nickname}님, 안녕하세요!</p>
         </Link>
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -54,12 +50,20 @@ const Footer = () => {
 };
 
 const Layout = () => {
+  const [nickname, setNickname] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('');
+
+  const updateHeaderInfo = (newNickname, newAvatarUrl) => {
+    setNickname(newNickname);
+    setAvatarUrl(newAvatarUrl);
+  };
+
   return (
     <>
-      <Header />
+      <Header nickname={nickname} avatarUrl={avatarUrl} />
       {/* <main className="flex flex-col justify-center items-center h-full"> */}
       <main>
-        <Outlet />
+        <Outlet updateHeaderInfo={updateHeaderInfo} />
       </main>
       <Footer />
     </>

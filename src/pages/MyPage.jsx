@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import api from '../api/api';
+import { useParams } from 'react-router-dom';
 
-function MyPage() {
+function MyPage({ updateHeaderInfo }) {
+  const { userId } = useParams();
   const queryClient = useQueryClient();
   const { data: user, isLoading } = useQuery({
     queryKey: ['userProfile'],
@@ -11,8 +13,15 @@ function MyPage() {
 
   const mutation = useMutation({
     mutationFn: api.user.updateProfile,
-    onSuccess: () => {
-      queryClient.invalidateQueries(['userProfile']);
+    onSuccess: (data) => {
+      console.log(data);
+      if (data && data.firstName && data.lastName) {
+        queryClient.invalidateQueries(['userProfile']);
+        updateHeaderInfo(`${data.firstName} ${data.lastName}`, data.avatar_url);
+        localStorage.setItem('avatarUrl', data.avatar_url);
+      } else {
+        console.error('프로필 업데이트 실패: 사용자 정보 확인 바람');
+      }
     }
   });
 
@@ -22,19 +31,65 @@ function MyPage() {
 
   useEffect(() => {
     if (user) {
-      setAvatarUrl(user.avatar_url);
+      const storedAvatarUrl = localStorage.getItem('avatarUrl');
+      const storedNickname = localStorage.getItem('nickname');
+      setAvatarUrl(storedAvatarUrl || user.avatar_url);
       setNickname(`${user.firstName} ${user.lastName}`);
+      console.log('avatar URL:', storedAvatarUrl || user.avatar_url);
+      console.log('nickname:', storedNickname || `${user.firstName} ${user.lastName}`);
     }
   }, [user]);
 
   const handleUpdateProfile = async () => {
-    const profileData = {
-      id: user.id,
-      avatar_url: avatar ? URL.createObjectURL(avatar) : user.avatar_url,
-      firstName: nickname.split(' ')[0],
-      lastName: nickname.split(' ')[1] || ''
-    };
-    mutation.mutate(profileData);
+    if (!user) {
+      console.error('유저 데이터가 없습니다.');
+      return;
+    }
+
+    let avatar_url = user.avatar_url;
+
+    if (avatar || nickname !== `${user.firstName} ${user.lastName}`) {
+      try {
+        // 이미지 업로드
+        if (avatar) {
+          console.log(avatar);
+          avatar_url = await uploadAvatarAndGetUrl(avatar);
+          console.log(avatar_url);
+        }
+
+        const profileData = {
+          avatar_url: avatar_url,
+          firstName: nickname.split(' ')[0],
+          lastName: nickname.split(' ')[1] || ''
+        };
+
+        // 프로필 업데이트 요청
+        const updatedUser = await mutation.mutateAsync(profileData);
+
+        if (updatedUser && updatedUser.firstName && updatedUser.lastName) {
+          updateHeaderInfo(`${updatedUser.firstName} ${updatedUser.lastName}`, updatedUser.avatar_url);
+          localStorage.setItem('avatarUrl', updatedUser.avatar_url);
+          localStorage.setItem('nickname', `${updatedUser.firstName} ${updatedUser.lastName}`);
+          setAvatarUrl(updatedUser.avatar_url);
+          setNickname(`${updatedUser.firstName} ${updatedUser.lastName}`);
+        } else {
+          console.error('프로필 업데이트 실패: 사용자 정보 확인!');
+        }
+      } catch (error) {
+        console.error('프로필 업데이트 실패', error);
+      }
+    }
+  };
+
+  const uploadAvatarAndGetUrl = async (file) => {
+    console.log(file);
+    try {
+      const uploadedImageResponse = await api.user.uploadAvatar(file);
+      console.log(uploadedImageResponse);
+      return uploadedImageResponse;
+    } catch (error) {
+      throw new Error('이미지 업로드 실패');
+    }
   };
 
   const handleImageChange = (e) => {

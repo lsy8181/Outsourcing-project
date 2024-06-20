@@ -16,9 +16,17 @@ function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data, error } = await supabase.auth.signInWithPassword(userData);
-      if (error) console.error(error);
-      if (data) {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: userData.email,
+        password: userData.password
+      });
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      if (data && data.session && data.session.access_token) {
+        localStorage.setItem('accessToken', data.session.access_token);
         navigate('/');
       }
     } catch (error) {
