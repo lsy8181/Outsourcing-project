@@ -67,7 +67,7 @@ const Detail = () => {
               }}
               className="bg-blue-500 hover:bg-blue-600 rounded-lg p-4 m-2 text-white"
             >
-              수정
+              수정 및 삭제
             </button>
           </div>
         </div>
