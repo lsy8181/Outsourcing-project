@@ -11,10 +11,7 @@ class UserAPI {
   async getUserProfile() {
     try {
       const id = await getId();
-      console.log(id);
-      const { data, error } = await this.#supabase.from('users').select('*');
-      // const { data, error } = await this.#supabase.from('users').select('*').eq('id', id);
-      console.log(data);
+      const { data, error } = await this.#supabase.from('users').select('*').eq('id', id);
       if (error) {
         throw new Error(error.message);
       }
@@ -28,18 +25,19 @@ class UserAPI {
 
   updateProfile = async (profileData) => {
     console.log(profileData);
-    const accessToken = localStorage.getItem('accessToken');
-    console.log('accessToken:', accessToken);
-    if (accessToken) {
+    const storage = localStorage.getItem('sb-xxeqrlcareyhdjuuyipu-auth-token');
+    const accessToken = JSON.parse(storage);
+    if (accessToken.access_token) {
       try {
         const id = await getId();
-        const { data, error } = await this.#supabase.from('users').update(profileData).eq('id', id);
-
+        const { error } = await this.#supabase.from('users').update(profileData).eq('id', id);
         if (error) {
           throw new Error(error.message);
+        } else {
+          const { data } = await this.#supabase.from('users').select('*').eq('id', id);
+          console.log(data);
+          return data;
         }
-
-        return data;
       } catch (err) {
         console.error('프로필 업데이트에 실패했습니다.', err);
         throw err;
@@ -50,11 +48,9 @@ class UserAPI {
   };
 
   uploadAvatar = async (file) => {
-    console.log(file);
     const { data: avatarData, error } = await this.#supabase.storage
       .from('avatars')
       .upload(`avatar/${uuidv4()}.png`, file);
-    console.log('data:', avatarData);
 
     if (error) {
       console.log(error);
@@ -62,9 +58,12 @@ class UserAPI {
     }
 
     const { data } = this.#supabase.storage.from('avatars').getPublicUrl(avatarData.path);
-    console.log('data:', data);
     return data.publicUrl;
   };
+
+  // async downloadAvatar() {
+  //   const response = await this.#supabase.from('avatars').select('*').eq('avatar/${uuidv4()}.png', file);
+  // }
 }
 
 export default UserAPI;

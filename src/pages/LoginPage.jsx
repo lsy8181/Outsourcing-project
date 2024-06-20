@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import supabase from '../supabase/supabase';
+import { AuthContext } from '../context/AuthContext';
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
   const [userData, setUserData] = useState({ email: '', password: '' });
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
@@ -17,25 +19,15 @@ function LoginPage() {
     }
   }, []);
 
-  const handleSingup = () => {
+  const handleSignUp = () => {
     navigate('/signUp');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!userData.email && !userData.password) {
+    if (!userData.email || !userData.password) {
       setError('이메일과 비밀번호를 입력해주세요');
-      return;
-    }
-
-    if (!userData.email) {
-      setError('이메일을 입력해주세요');
-      return;
-    }
-
-    if (!userData.password) {
-      setError('비밀번호를 입력해주세요');
       return;
     }
 
@@ -43,7 +35,7 @@ function LoginPage() {
       const { data, error } = await supabase.auth.signInWithPassword(userData);
       if (error) {
         setError('회원정보가 없습니다');
-      } else if (data) {
+      } else {
         if (rememberMe) {
           localStorage.setItem('email', userData.email);
           localStorage.setItem('password', userData.password);
@@ -51,6 +43,7 @@ function LoginPage() {
           localStorage.removeItem('email');
           localStorage.removeItem('password');
         }
+        login(userData);
         navigate('/');
       }
     } catch (error) {
@@ -58,27 +51,20 @@ function LoginPage() {
     }
   };
 
-  console.log(error.message);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
   };
 
-  console.log(userData);
-
   const handleRemember = (e) => {
     setRememberMe(e.target.checked);
   };
 
-  console.log(rememberMe);
   return (
     <div className="flex min-h-screen">
-      {/* Left side with gradient background */}
       <div className="flex items-center justify-center w-1/2 bg-gradient-to-r from-purple-500 to-orange-300">
         <div className="text-white text-5xl font-bold">Welcome Back!</div>
       </div>
-      .{/* Right side with login form */}
       <div className="flex items-center justify-center w-1/2 bg-white">
         <form className="flex flex-col items-center gap-4 p-6 w-2/3 bg-white shadow-lg rounded" onSubmit={handleSubmit}>
           <div className="text-2xl font-semibold text-gray-800">Login</div>
@@ -114,7 +100,7 @@ function LoginPage() {
           </button>
           <p className="mt-4">
             New User?{' '}
-            <a href="#" className="text-indigo-500 " onClick={handleSingup}>
+            <a href="#" className="text-indigo-500" onClick={handleSignUp}>
               Sign up
             </a>
           </p>
