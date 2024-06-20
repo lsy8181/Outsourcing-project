@@ -1,12 +1,15 @@
-import React from 'react';
+import { useState } from 'react';
 import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { getId } from '../../utils/getId';
 import ScrollToTop from './ScrollToTop';
 
+// { nickname, avatarUrl }
 const Header = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
-  const { isLoggedIn, user, logout } = useAuth();
+  const { isLoggedIn, user, logout, user_id } = useAuth();
+  console.log(typeof user_id);
 
   const handleLogout = () => {
     logout();
@@ -24,7 +27,12 @@ const Header = () => {
       <div className="flex gap-2 items-center">
         {isLoggedIn ? (
           <>
-            <Link to={`/my-page/${userId}`} className="flex gap-2 items-center">
+            <Link
+              to={`/my-page/${
+                user_id || JSON.parse(localStorage.getItem('sb-xxeqrlcareyhdjuuyipu-auth-token')).user.id
+              }`}
+              className="flex gap-2 items-center"
+            >
               <img src={profileImageUrl} alt="프로필 사진" width="60px" className="rounded-full" />
               <p className="mr-4 hover:font-semibold">{nickname}님</p>
             </Link>
@@ -71,12 +79,21 @@ const Footer = () => {
 };
 
 const Layout = () => {
+  const [nickname, setNickname] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('');
+
+  const updateHeaderInfo = (newNickname, newAvatarUrl) => {
+    setNickname(newNickname);
+    setAvatarUrl(newAvatarUrl);
+  };
+
   return (
     <>
       <ScrollToTop />
+      {/* <Header nickname={nickname} avatarUrl={avatarUrl} /> */}
       <Header />
       <main className="flex-1">
-        <Outlet />
+        <Outlet context={{ updateHeaderInfo }} />
       </main>
       <Footer />
     </>
