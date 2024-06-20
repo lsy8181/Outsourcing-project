@@ -30,9 +30,24 @@ class PostAPI {
   }
 
   async getPosts() {
-    const response = await this.#supabase.from('posts').select('*').order('created_at', { ascending: false });
-    console.log('API GET POSTS___', response);
-    return response;
+    const { data } = await this.#supabase.from('posts').select('*').order('created_at', { ascending: false });
+    return data;
+  }
+
+  async fetchPlaces({ pageParam = 0 }) {
+    const pageSize = 4; // 페이지당 데이터 수
+    const start = pageParam * pageSize; // 시작 인덱스
+    const end = start + pageSize - 1; // 끝 인덱스
+
+    const { data, error } = await this.#supabase
+      .from('posts')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .range(start, end);
+
+    if (error) console.error('Error fetching posts:', error);
+
+    return data;
   }
 }
 
