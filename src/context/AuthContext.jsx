@@ -16,11 +16,11 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = async (userData) => {
+  const login = (userData) => {
     localStorage.setItem('user', JSON.stringify(userData));
     setIsLoggedIn(true);
     setUser(userData);
-    const storage = await localStorage.getItem('sb-xxeqrlcareyhdjuuyipu-auth-token');
+    const storage = localStorage.getItem('sb-xxeqrlcareyhdjuuyipu-auth-token');
     const parsedStorage = JSON.parse(storage);
     setUser_id(parsedStorage.user.id);
   };

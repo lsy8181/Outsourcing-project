@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import api from '../api/api';
+import api from '../../api/api';
 import { useOutletContext, useParams } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import supabase from '../supabase/supabase';
+// import { useAuth } from '../context/AuthContext';
+import supabase from '../../supabase/supabase';
 
 function MyPage() {
   const { updateHeaderInfo } = useOutletContext();

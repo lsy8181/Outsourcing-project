@@ -9,7 +9,7 @@ const Header = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const { isLoggedIn, user, logout, user_id } = useAuth();
-  console.log('user_id', user_id);
+  console.log(typeof user_id);
 
   const handleLogout = () => {
     logout();
@@ -27,7 +27,12 @@ const Header = () => {
       <div className="flex gap-2 items-center">
         {isLoggedIn ? (
           <>
-            <Link to={`/my-page/${user_id}`} className="flex gap-2 items-center">
+            <Link
+              to={`/my-page/${
+                user_id || JSON.parse(localStorage.getItem('sb-xxeqrlcareyhdjuuyipu-auth-token')).user.id
+              }`}
+              className="flex gap-2 items-center"
+            >
               <img src={profileImageUrl} alt="프로필 사진" width="60px" className="rounded-full" />
               <p className="mr-4 hover:font-semibold">{nickname}님</p>
             </Link>
