@@ -40,11 +40,14 @@ export default function useLike() {
 
   const { mutate: dislikePost } = useMutation({
     mutationFn: (disLikePostData) => api.like.disLikePost(disLikePostData),
-    onMutate: async (likePostData) => {
+    onMutate: async (disLikePostData) => {
+      console.log(disLikePostData);
       await queryClient.cancelQueries({ queryKey: ['likes', postData[0].post_id] });
       const prevLikes = queryClient.getQueryData(['likes', postData[0].post_id]);
       queryClient.setQueryData(['likes', postData[0].post_id], (old) => {
-        return [...old, likePostData];
+        return old
+          .filter((like) => like.user_id !== disLikePostData.user_id)
+          .filter((like) => like.post_id_id !== disLikePostData.post_id_id);
       });
 
       return prevLikes;
