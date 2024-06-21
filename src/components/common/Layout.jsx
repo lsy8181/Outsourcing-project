@@ -9,7 +9,6 @@ const Header = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const { isLoggedIn, user, logout, user_id } = useAuth();
-  console.log(typeof user_id);
 
   const handleLogout = () => {
     logout();

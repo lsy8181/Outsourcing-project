@@ -15,8 +15,8 @@ function MyPage() {
     queryKey: ['userProfile', userId],
     queryFn: () => api.user.getUserProfile(userId) // userId를 이용하여 프로필 조회
   });
-  console.log('user', user);
-  console.log(userId);
+  // console.log('user', user);
+  // console.log(userId);
 
   const mutation = useMutation({
     mutationFn: (profileData) => api.user.updateProfile(profileData),
