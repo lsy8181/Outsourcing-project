@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import Comments from '../../components/Comments';
 import Like from '../../components/Like';
-import { useAuth } from '../../context/AuthContext';
+import { AuthContext, useAuth } from '../../context/AuthContext';
 import './Detail.css';
 
 const Detail = () => {
@@ -10,6 +10,8 @@ const Detail = () => {
   const loadData = useLoaderData();
   const { isLoggedIn } = useAuth();
   const { data } = loadData;
+  const { user_id: curUserId } = useContext(AuthContext);
+  // console.log(data[0].user_id, 'aaa', curUserId);
 
   const renderStars = (rating) => {
     const totalStars = 5;
@@ -62,22 +64,26 @@ const Detail = () => {
           <div className="w-[1000px] h-[250px] border-2 border-slate-300 rounded-md">{data[0].contents}</div>
           {isLoggedIn && (
             <>
-              <div className="flex justify-center items-center gap-2">
-                <Like />
-                <button
-                  onClick={() => {
-                    navigate(`/edit/${data[0].post_id}`);
-                  }}
-                  className="bg-blue-500 hover:bg-blue-600 rounded-lg p-4  text-white text-xs"
-                >
-                  수정 및 삭제
-                </button>
-              </div>
-              <div className="flex w-full">
-                <Comments />
+              <div className="flex justify-between  items-center gap-2 ">
+                <div className="flex-1 flex justify-center">
+                  <Like />
+                </div>
+                {data[0].user_id === curUserId && (
+                  <button
+                    onClick={() => {
+                      navigate(`/edit/${data[0].post_id}`);
+                    }}
+                    className="bg-blue-500 hover:bg-blue-600 rounded-lg p-4  text-white text-xs "
+                  >
+                    수정 및 삭제
+                  </button>
+                )}
               </div>
             </>
           )}
+          <div className="flex w-full">
+            <Comments />
+          </div>
         </div>
       </div>
     </>

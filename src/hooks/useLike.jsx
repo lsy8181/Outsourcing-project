@@ -1,18 +1,21 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useContext } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import api from '../api/api';
+import { AuthContext } from '../context/AuthContext';
 
 export default function useLike() {
   const queryClient = useQueryClient();
   const loaderData = useLoaderData();
   const { data: postData } = loaderData;
+  const { user_id: curUserId } = useContext(AuthContext);
 
   //TODO user_id 하드코딩
   const getLikeData = {
     post_id: postData[0].post_id,
-    user_id: '763e8f67-15f6-490e-9c80-5bbb03ba6905'
+    user_id: curUserId
   };
-
+  // console.log(getLikeData);
   const { data: likes, isLoading } = useQuery({
     queryKey: ['likes', postData[0].post_id],
     queryFn: () => api.like.getLike(getLikeData)
