@@ -1,0 +1,19 @@
+.star,
+.half-star {
+  color: #ffd700; /* 채워진 별과 반개 별의 색상 */
+  font-size: 3.75rem;
+}
+
+.half-star {
+  position: absolute;
+  display: inline-block;
+  width: 1em;
+}
+
+.half-star::before {
+  content: '★';
+  position: absolute;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+}
