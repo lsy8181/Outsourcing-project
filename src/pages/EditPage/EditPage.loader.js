@@ -11,6 +11,13 @@ export default async function editPageLoader({ params }) {
 
   const { postId } = params;
   const response = await api.post.getPost(postId);
+  const data = localStorage.getItem('user');
+
+  if (!data) return redirect('/login');
+
+  const { user_id } = JSON.parse(data);
+
+  if (user_id !== response.data[0].user_id) return redirect('/');
   // console.log('EDIT LOADER___', response);
   return response;
 }

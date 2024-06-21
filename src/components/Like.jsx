@@ -1,13 +1,16 @@
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import useLike from '../hooks/useLike';
 
 function Like() {
   const { likePost, dislikePost, isLike, postData } = useLike();
+  const { user_id: curUserId } = useContext(AuthContext);
 
   //TODO user_id 하드코딩
   const onClickLikeHandler = async () => {
     const likePostData = {
       post_id: postData[0].post_id,
-      user_id: '763e8f67-15f6-490e-9c80-5bbb03ba6905'
+      user_id: curUserId
     };
 
     if (isLike) dislikePost(likePostData);

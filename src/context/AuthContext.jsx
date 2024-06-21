@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { json } from 'react-router-dom';
 
 export const AuthContext = createContext();
 
@@ -11,7 +10,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const storeUser = localStorage.getItem('user');
     if (storeUser) {
-      setUser(JSON.parse(storeUser));
+      const data = JSON.parse(storeUser);
+      setUser(data);
+      setUser_id(data.user_id);
       setIsLoggedIn(true);
     }
   }, []);

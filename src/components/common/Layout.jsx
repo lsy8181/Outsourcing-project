@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { getId } from '../../utils/getId';
 import ScrollToTop from './ScrollToTop';
 
 const Header = ({ firstName, lastName, userPic }) => {
@@ -10,6 +9,7 @@ const Header = ({ firstName, lastName, userPic }) => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const { isLoggedIn, user, logout, user_id } = useAuth();
+
 
   const handleLogout = () => {
     logout();
