@@ -16,10 +16,10 @@ function Comments() {
   const toast = useToast();
   const loaderData = useLoaderData();
   const { data: postData } = loaderData;
-  const { user_id: curUserId } = useContext(AuthContext);
+  const { user_id: curUserId, isLoggedIn } = useContext(AuthContext);
 
   const inputRef = useRef(null);
-
+  console.log(isLoggedIn);
   const { comments, isLoading, createComment } = useComment();
 
   //TODO user_id 하드코딩
@@ -69,18 +69,20 @@ function Comments() {
           ))}
       </ul>
 
-      <div className="flex flex-col gap-2 ">
-        <textarea ref={inputRef} className="w-full p-2 resize-none" placeholder="댓글" maxLength={100} />
-        <button
-          onClick={onCreateCommentHandler}
-          className=" py-2 px-6 text-xs rounded-lg border border-gray-300  ml-auto font-bold text-white
+      {isLoggedIn && (
+        <div className="flex flex-col gap-2 ">
+          <textarea ref={inputRef} className="w-full p-2 resize-none" placeholder="댓글" maxLength={100} />
+          <button
+            onClick={onCreateCommentHandler}
+            className=" py-2 px-6 text-xs rounded-lg border border-gray-300  ml-auto font-bold text-white
          bg-purple-500 
         hover:bg-purple-600 hover:shadow-md
         active:bg-purple-700"
-        >
-          버튼
-        </button>
-      </div>
+          >
+            버튼
+          </button>
+        </div>
+      )}
     </div>
   );
 }
