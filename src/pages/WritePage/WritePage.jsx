@@ -170,8 +170,6 @@ function WritePage() {
   return (
     <main>
       <div className="max-w-[1440px] mx-auto flex flex-col items-center p-2 justify-center gap-6">
-        <h1>WritePage</h1>
-
         <div className="max-w-[500px] w-full flex border border-gray-200 divide-x-2 divide-solid">
           <div className="relative w-full flex-1">
             <input
