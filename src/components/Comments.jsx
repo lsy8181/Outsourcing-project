@@ -52,7 +52,7 @@ function Comments() {
 
   return (
     <div
-      className="flex flex-col max-w-[800px] w-full border-t-2 border-gray-200
+      className="flex flex-col max-w-[1000px] w-full border-t-2 border-gray-200
       border-b-2 bg-gray-100 p-2 "
     >
       <ul className="w-full divide-y-2 divide-solid divide-gray-200 px-2">
