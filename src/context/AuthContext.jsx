@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const storeUser = localStorage.getItem('user');
-    if (storeUser.length) {
+    if (storeUser) {
       const data = JSON.parse(storeUser);
       setUser(data);
       setUser_id(data.user_id);
