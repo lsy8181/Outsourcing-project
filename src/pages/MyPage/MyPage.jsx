@@ -175,22 +175,30 @@ function MyPage() {
   }
 
   return (
-    <div className="w-[500px] flex flex-col border border-solid border-slate-300 rounded-xl mx-auto my-24 text-center gap-8 py-8">
-      <h2>프로필 수정</h2>
-      <div className="flex flex-row mx-auto items-center gap-12">
-        <div className="flex flex-col gap-5 px-6">
-          <label htmlFor="avatar">이미지 변경하기</label>
-          <img src={userPic} alt="프로필 이미지" className="bg-slate-300 w-32 h-32 rounded-full object-cover" />
+    <div className="max-w-md mx-auto my-24 p-8 bg-white rounded-xl shadow-lg text-center flex flex-col gap-8">
+      <h2 className="text-2xl font-semibold">프로필 수정</h2>
+      <div className="flex flex-col items-center gap-8">
+        <div className="flex flex-col items-center gap-5 px-6">
+          <label htmlFor="avatar" className="text-lg font-medium">
+            이미지 변경하기
+          </label>
+          <img
+            src={userPic}
+            alt="프로필 이미지"
+            className="bg-gray-200 w-32 h-32 rounded-full object-cover border border-gray-300"
+          />
           <button
-            className="py-2 px-4 bg-slate-400 rounded text-white mx-auto transition ease-in-out hover:bg-slate-500"
+            className="py-2 px-4 bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-600 transition ease-in-out"
             onClick={() => document.getElementById('fileInput').click()}
           >
             파일 선택
           </button>
           <input id="fileInput" type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
         </div>
-        <div className="flex flex-col gap-5">
-          <label htmlFor="nickname">이름 변경하기</label>
+        <div className="flex flex-col items-center gap-5">
+          <label htmlFor="nickname" className="text-lg font-medium">
+            이름 변경하기
+          </label>
           <input
             type="text"
             placeholder="닉네임"
@@ -198,12 +206,12 @@ function MyPage() {
             maxLength="10"
             value={nickname}
             onChange={handleNicknameChange}
-            className="h-8 rounded border border-solid border-slate-300"
+            className="w-48 h-10 px-4 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
       </div>
       <button
-        className="py-2 px-4 bg-slate-400 rounded text-white mx-auto transition ease-in-out hover:bg-slate-500"
+        className="py-2 px-6 bg-green-500 text-white rounded-full shadow-md hover:bg-green-600 transition ease-in-out"
         onClick={handleUpdateProfile}
       >
         프로필 업데이트
