@@ -4,7 +4,6 @@ import { AuthContext } from '../context/AuthContext';
 import '../css/LoginPage.css';
 import supabase from '../supabase/supabase';
 
-
 function LoginPage() {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
