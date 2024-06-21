@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { getId } from '../../utils/getId';
 import ScrollToTop from './ScrollToTop';
 
 const Header = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const { isLoggedIn, user, logout, user_id } = useAuth();
-  console.log(typeof user_id);
+  // console.log(typeof user_id);
 
   const handleLogout = () => {
     logout();

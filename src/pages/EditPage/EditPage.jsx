@@ -1,7 +1,8 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useContext, useEffect, useId, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import Modal from '../../components/Modal';
+import { AuthContext } from '../../context/AuthContext';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
 import { useModal } from '../../hooks/useModal';
 import usePost from '../../hooks/usePost';
@@ -14,6 +15,7 @@ function EditPage() {
   const toast = useToast();
   const loaderData = useLoaderData();
   const modal = useModal();
+  const { user_id: curUserId } = useContext(AuthContext);
   const { data: postData } = loaderData;
   // console.log(postData);
   // 맵
@@ -127,7 +129,7 @@ function EditPage() {
       title: inputRef.current[1].value || null,
       contents: inputRef.current[2].value || null,
       star: starWidth,
-      user_id: '763e8f67-15f6-490e-9c80-5bbb03ba6905'
+      user_id: curUserId
     };
     // console.log('NEW POST DATA___', newPostData);
     const response = await updatePost(newPostData);
