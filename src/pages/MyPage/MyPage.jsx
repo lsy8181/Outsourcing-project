@@ -23,8 +23,10 @@ function MyPage() {
     onSuccess: (user) => {
       if (user && user[0].firstName) {
         queryClient.invalidateQueries(['userProfile', userId]);
-        const nickName = user[0].firstName + user[0].lastName;
-        updateHeaderInfo(nickName, user[0].avatar_url);
+        const firstName = user[0].firstName;
+        const lastName = user[0].lastName;
+        const avatarUrl = user[0].avatar_url;
+        updateHeaderInfo(firstName, lastName, user[0].avatar_url);
       } else {
         console.error('프로필 업데이트 실패: 사용자 정보 확인 바람');
       }
@@ -34,9 +36,12 @@ function MyPage() {
     }
   });
 
+  const [firstName, setFirstName] = useState(user ? `${user[0].firstName}` : '');
+  const [lastName, setLastName] = useState(user ? `${user[0].lastName}` : '');
+
   // const [avatar, setAvatar] = useState(null);
   // const [avatarUrl, setAvatarUrl] = useState(null);
-  const [nickname, setNickname] = useState(user ? `${user[0].firstName} ${user[0].lastName}` : '');
+  // const [nickname, setNickname] = useState(user ? `${user[0].firstName}${user[0].lastName}` : '');
 
   // useEffect(() => {
   //   if (user && user.length > 0) {
@@ -46,10 +51,15 @@ function MyPage() {
   //   }
   // }, [user, avatarUrl]);
   // console.log(avatarUrl);
+
+  // let nickname = firstName + lastName;
+
   useEffect(() => {
     if (user && user.length > 0) {
-      const { firstName, lastName } = user[0];
-      setNickname(`${firstName} ${lastName}`);
+      setFirstName(user[0].firstName);
+      setLastName(user[0].lastName);
+      // const { firstName, lastName } = user[0];
+      // setNickname(`${firstName} ${lastName}`);
     }
   }, [user]);
 
@@ -60,7 +70,7 @@ function MyPage() {
     }
 
     // let avatar_url = user[0].avatar_url;
-    let firstName = nickname;
+    // let firstName = nickname;
     // let lastName = user[0].lastName;
 
     // if (avatar || nickname !== `${user[0].firstName} ${user[0].lastName}`) {
@@ -70,10 +80,13 @@ function MyPage() {
       // }
       const profileData = {
         // avatar_url,
-        firstName
+        firstName,
+        lastName
         // lastName: user[0].lastName
       };
       await mutation.mutateAsync(profileData);
+
+      // localStorage.setItem('f')
     } catch (error) {
       console.error('프로필 업데이트 실패', error);
     }
@@ -104,8 +117,12 @@ function MyPage() {
   //   // }
   // };
 
-  const handleNicknameChange = (e) => {
-    setNickname(e.target.value);
+  const handleFirstNameChange = (e) => {
+    setFirstName(e.target.value);
+  };
+
+  const handleLastNameChange = (e) => {
+    setLastName(e.target.value);
   };
 
   // if (isLoading) {
@@ -196,16 +213,30 @@ function MyPage() {
           <input id="fileInput" type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
         </div>
         <div className="flex flex-col items-center gap-5">
-          <label htmlFor="nickname" className="text-lg font-medium">
+          <label htmlFor="firstName" className="text-lg font-medium">
             이름 변경하기
           </label>
           <input
             type="text"
-            placeholder="닉네임"
+            placeholder="이름"
             minLength="1"
             maxLength="10"
-            value={nickname}
-            onChange={handleNicknameChange}
+            value={firstName}
+            onChange={handleFirstNameChange}
+            className="w-48 h-10 px-4 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div className="flex flex-col items-center gap-5">
+          <label htmlFor="lastName" className="text-lg font-medium">
+            성 변경하기
+          </label>
+          <input
+            type="text"
+            placeholder="성"
+            minLength="1"
+            maxLength="10"
+            value={lastName}
+            onChange={handleLastNameChange}
             className="w-48 h-10 px-4 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
