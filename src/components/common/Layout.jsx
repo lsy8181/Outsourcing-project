@@ -3,19 +3,22 @@ import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import ScrollToTop from './ScrollToTop';
 
-const Header = () => {
+const Header = ({ firstName, lastName, avatarUrl }) => {
+  // console.log('firstName', firstName);
+
   const navigate = useNavigate();
   const { userId } = useParams();
   const { isLoggedIn, user, logout, user_id } = useAuth();
-  // console.log(typeof user_id);
+
 
   const handleLogout = () => {
     logout();
     navigate('/');
   };
 
-  const profileImageUrl = user?.profileImageUrl || 'https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_640.jpg';
-  const nickname = user?.nickname || '닉네임';
+  const profileImageUrl = avatarUrl || 'https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_640.jpg';
+  // const nickname = user?.nickname || '닉네임';
+  const profileName = `${firstName}${lastName}`;
 
   return (
     <header className="bg-gradient-to-r from-blue-400 to-blue-600 p-4 mb-2 shadow-md flex justify-between items-center">
@@ -40,7 +43,7 @@ const Header = () => {
                 width="60px"
                 className="rounded-full border-2 border-white"
               />
-              <p className="mr-4 text-white hover:font-semibold">{nickname}님</p>
+              <p className="mr-4 text-white hover:font-semibold">{profileName}님</p>
             </Link>
             <button
               className="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-4 rounded"
@@ -85,20 +88,24 @@ const Footer = () => {
 };
 
 const Layout = () => {
-  const [nickname, setNickname] = useState('');
-  const [avatarUrl, setAvatarUrl] = useState('');
+  // const [nickname, setNickname] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  // const [avatarUrl, setAvatarUrl] = useState('');
 
-  const updateHeaderInfo = (newNickname, newAvatarUrl) => {
-    setNickname(newNickname);
-    setAvatarUrl(newAvatarUrl);
+  const updateHeaderInfo = (newFirstName, newLastName, newAvatarUrl) => {
+    // setNickname(newNickname);
+    setFirstName(newFirstName);
+    setLastName(newLastName);
+    // setAvatarUrl(newAvatarUrl);
   };
 
   return (
     <>
       <ScrollToTop />
-      <Header />
+      <Header firstName={firstName} lastName={lastName} />
       <main className="flex-1 bg-gray-100 p-4">
-        <Outlet context={{ updateHeaderInfo }} />
+        <Outlet context={{ updateHeaderInfo, firstName, lastName }} />
       </main>
       <Footer />
     </>

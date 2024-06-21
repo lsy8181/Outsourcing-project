@@ -60,10 +60,6 @@ class UserAPI {
     const { data } = this.#supabase.storage.from('avatars').getPublicUrl(avatarData.path);
     return data.publicUrl;
   };
-
-  // async downloadAvatar() {
-  //   const response = await this.#supabase.from('avatars').select('*').eq('avatar/${uuidv4()}.png', file);
-  // }
 }
 
 export default UserAPI;
