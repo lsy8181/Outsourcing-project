@@ -77,11 +77,11 @@ const Detail = () => {
                   </button>
                 )}
               </div>
-              <div className="flex w-full">
-                <Comments />
-              </div>
             </>
           )}
+          <div className="flex w-full">
+            <Comments />
+          </div>
         </div>
       </div>
     </>
