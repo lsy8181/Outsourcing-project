@@ -14,7 +14,6 @@ class API {
 
   constructor() {
     this.#supabase = supabase;
-
     this.post = new PostAPI(this.#supabase);
     this.comment = new CommentAPI(this.#supabase);
     this.user = new UserAPI(this.#supabase);
