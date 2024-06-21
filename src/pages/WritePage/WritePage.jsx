@@ -1,6 +1,7 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useContext, useEffect, useId, useRef, useState } from 'react';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
 import usePost from '../../hooks/usePost';
 import { useToast } from '../../hooks/useToast';
@@ -10,6 +11,7 @@ const { kakao } = window;
 function WritePage() {
   const toast = useToast();
   const nav = useNavigate();
+  const { user_id: curUserId } = useContext(AuthContext);
   // 맵
   const [map, setMap] = useState(null);
   // 마커
@@ -123,7 +125,7 @@ function WritePage() {
       title: inputRef.current[1].value || null,
       contents: inputRef.current[2].value || null,
       star: starWidth,
-      user_id: '763e8f67-15f6-490e-9c80-5bbb03ba6905'
+      user_id: curUserId
     };
 
     // console.log(newPostData);

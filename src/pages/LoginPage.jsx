@@ -4,7 +4,6 @@ import { AuthContext } from '../context/AuthContext';
 import '../css/LoginPage.css';
 import supabase from '../supabase/supabase';
 
-
 function LoginPage() {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
@@ -35,6 +34,7 @@ function LoginPage() {
 
     try {
       const { data, error } = await supabase.auth.signInWithPassword(userData);
+
       if (error) {
         setError('회원정보가 없습니다');
       } else {
@@ -45,7 +45,11 @@ function LoginPage() {
           localStorage.removeItem('email');
           localStorage.removeItem('password');
         }
-        login(userData);
+        const newUserData = {
+          ...userData,
+          user_id: data.user.id
+        };
+        login(newUserData);
         navigate('/');
       }
     } catch (error) {

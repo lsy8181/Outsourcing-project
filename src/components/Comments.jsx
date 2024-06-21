@@ -1,5 +1,6 @@
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import useComment from '../hooks/useComment';
 import { useToast } from '../hooks/useToast';
 import Comment from './Comment';
@@ -15,6 +16,7 @@ function Comments() {
   const toast = useToast();
   const loaderData = useLoaderData();
   const { data: postData } = loaderData;
+  const { user_id: curUserId } = useContext(AuthContext);
 
   const inputRef = useRef(null);
 
@@ -24,7 +26,7 @@ function Comments() {
   const onCreateCommentHandler = async () => {
     const newCommentData = {
       post_id: postData[0].post_id,
-      user_id: '763e8f67-15f6-490e-9c80-5bbb03ba6905',
+      user_id: curUserId,
       created_at: new Date(),
       content: inputRef.current.value || null
     };
@@ -55,8 +57,15 @@ function Comments() {
     >
       <ul className="w-full divide-y-2 divide-solid divide-gray-200 px-2">
         {!isLoading &&
-          comments.data?.map(({ comment_id, content, created_at, users }) => (
-            <Comment key={comment_id} comment_id={comment_id} content={content} created_at={created_at} users={users} />
+          comments.data?.map(({ comment_id, content, created_at, users, user_id }) => (
+            <Comment
+              key={comment_id}
+              comment_id={comment_id}
+              content={content}
+              created_at={created_at}
+              users={users}
+              user_id={user_id}
+            />
           ))}
       </ul>
 

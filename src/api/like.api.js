@@ -18,9 +18,9 @@ class LikeAPI {
   }
 
   async getLike({ post_id, user_id }) {
-    const { data } = await this.#supabase.from('likes').select('*').match({ post_id, user_id });
-    // console.log('API GET LIKE___', data);
-    return data;
+    const response = await this.#supabase.from('likes').select('*').match({ post_id, user_id });
+    // console.log('API GET LIKE___', response);
+    return response.data;
   }
 }
 
