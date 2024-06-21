@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { getId } from '../../utils/getId';
 import ScrollToTop from './ScrollToTop';
 
-const Header = ({ firstName, lastName, avatarUrl }) => {
+const Header = ({ firstName, lastName, userPic }) => {
   // console.log('firstName', firstName);
 
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const Header = ({ firstName, lastName, avatarUrl }) => {
     navigate('/');
   };
 
-  const profileImageUrl = avatarUrl || 'https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_640.jpg';
+  const profileImageUrl = userPic || 'https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_640.jpg';
   // const nickname = user?.nickname || '닉네임';
   const profileName = `${firstName}${lastName}`;
 
@@ -92,20 +92,31 @@ const Layout = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   // const [avatarUrl, setAvatarUrl] = useState('');
+  const [userPic, setUserPic] = useState('https://ifh.cc/g/dgyJCA.png');
 
-  const updateHeaderInfo = (newFirstName, newLastName, newAvatarUrl) => {
+  useEffect(() => {
+    const storedFirstName = localStorage.getItem('firstName');
+    const storedLastName = localStorage.getItem('lastName');
+
+    if (storedFirstName && storedLastName) {
+      setFirstName(storedFirstName);
+      setLastName(storedLastName);
+    }
+  }, []);
+
+  const updateHeaderInfo = (newFirstName, newLastName, newUserPic) => {
     // setNickname(newNickname);
     setFirstName(newFirstName);
     setLastName(newLastName);
-    // setAvatarUrl(newAvatarUrl);
+    setUserPic(newUserPic);
   };
 
   return (
     <>
       <ScrollToTop />
-      <Header firstName={firstName} lastName={lastName} />
+      <Header firstName={firstName} lastName={lastName} userPic={userPic} />
       <main className="flex-1 bg-gray-100 p-4">
-        <Outlet context={{ updateHeaderInfo, firstName, lastName }} />
+        <Outlet context={{ updateHeaderInfo, firstName, lastName, userPic }} />
       </main>
       <Footer />
     </>

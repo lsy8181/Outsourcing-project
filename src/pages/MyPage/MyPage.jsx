@@ -8,15 +8,12 @@ import supabase from '../../supabase/supabase';
 function MyPage() {
   const { updateHeaderInfo } = useOutletContext();
   const { userId } = useParams();
-  // console.log(userId);
 
   const queryClient = useQueryClient();
   const { data: user, isLoading } = useQuery({
     queryKey: ['userProfile', userId],
-    queryFn: () => api.user.getUserProfile(userId) // userId를 이용하여 프로필 조회
+    queryFn: () => api.user.getUserProfile(userId)
   });
-  // console.log('user', user);
-  // console.log(userId);
 
   const mutation = useMutation({
     mutationFn: (profileData) => api.user.updateProfile(profileData),
@@ -25,8 +22,9 @@ function MyPage() {
         queryClient.invalidateQueries(['userProfile', userId]);
         const firstName = user[0].firstName;
         const lastName = user[0].lastName;
-        const avatarUrl = user[0].avatar_url;
-        updateHeaderInfo(firstName, lastName, user[0].avatar_url);
+        const avatarUrl = user && user[0].avatar_url;
+        console.log('avatarUrl', avatarUrl);
+        updateHeaderInfo(firstName, lastName, avatarUrl);
       } else {
         console.error('프로필 업데이트 실패: 사용자 정보 확인 바람');
       }
@@ -38,6 +36,7 @@ function MyPage() {
 
   const [firstName, setFirstName] = useState(user ? `${user[0].firstName}` : '');
   const [lastName, setLastName] = useState(user ? `${user[0].lastName}` : '');
+  const [avatarUrl, setAvatarUrl] = useState(user ? `${user[0].avatarUrl}` : '');
 
   // const [avatar, setAvatar] = useState(null);
   // const [avatarUrl, setAvatarUrl] = useState(null);
@@ -58,6 +57,7 @@ function MyPage() {
     if (user && user.length > 0) {
       setFirstName(user[0].firstName);
       setLastName(user[0].lastName);
+      setAvatarUrl(user[0].avatarUrl);
       // const { firstName, lastName } = user[0];
       // setNickname(`${firstName} ${lastName}`);
     }
@@ -81,12 +81,15 @@ function MyPage() {
       const profileData = {
         // avatar_url,
         firstName,
-        lastName
+        lastName,
+        avatarUrl
         // lastName: user[0].lastName
       };
       await mutation.mutateAsync(profileData);
 
-      // localStorage.setItem('f')
+      localStorage.setItem('firstName', firstName);
+      localStorage.setItem('lastName', lastName);
+      localStorage.setItem('avatarUrl', avatarUrl);
     } catch (error) {
       console.error('프로필 업데이트 실패', error);
     }
